@@ -1,0 +1,186 @@
+\documentclass[a4paper,13pt]{book}
+\usepackage[centertags]{amsmath}
+\usepackage{amscd}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%\usepackage{array}
+\usepackage{enumerate}
+%\usepackage{xypic}
+%\usepackage[dvips]{graphics}
+%\usepackage{moreverb}
+\usepackage{multicol}
+
+\usepackage[english]{babel}
+%\usepackage{epsfig}
+%\usepackage{rotating}
+%\usepackage[all]{xy}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{tabls} %per tenir m{\'e}s control sobre l'espai en les taules nom{\'e}s cal aquest paquet
+\usepackage{indentfirst} %per comen\c{c}ar primer parragraf de seccio o capitol amb indent
+
+
+\usepackage[T1]{fontenc}
+% \usepackage[sc]{mathpazo}
+\linespread{1.1} % Palatino needs more leading (space between lines)
+
+\usepackage[latin1]{inputenc}
+\usepackage[twoside,bindingoffset=1cm]{geometry}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% theorem environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheorem{defn0}{Definition}[chapter]
+\newtheorem{prop0}[defn0]{Proposition}
+\newtheorem{thm0}[defn0]{Theorem}
+\newtheorem{lemma0}[defn0]{Lemma}
+\newtheorem{corollary0}[defn0]{Corollary}
+\newtheorem{example0}[defn0]{Example}
+\newtheorem{remark0}[defn0]{Remark}
+\newtheorem{conjecture0}[defn0]{Conjecture}
+
+\newenvironment{definition}{ \begin{defn0}}{\end{defn0}}
+\newenvironment{proposition}{\bigskip \begin{prop0}}{\end{prop0}}
+\newenvironment{theorem}{\bigskip \begin{thm0}}{\end{thm0}}
+\newenvironment{lemma}{\bigskip \begin{lemma0}}{\end{lemma0}}
+\newenvironment{corollary}{\bigskip \begin{corollary0}}{\end{corollary0}}
+\newenvironment{example}{ \begin{example0}\rm}{\end{example0}}
+\newenvironment{remark}{ \begin{remark0}\rm}{\end{remark0}}
+\newenvironment{conjecture}{\begin{conjecture0}}{\end{conjecture0}}
+
+\newcommand{\defref}[1]{Definition~\ref{#1}}
+\newcommand{\propref}[1]{Proposition~\ref{#1}}
+\newcommand{\thmref}[1]{Theorem~\ref{#1}}
+\newcommand{\lemref}[1]{Lemma~\ref{#1}}
+\newcommand{\corref}[1]{Corollary~\ref{#1}}
+\newcommand{\exref}[1]{Example~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
+\newcommand{\remref}[1]{Remark~\ref{#1}}
+\newcommand{\conjref}[1]{Conjecture~\ref{#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% environments per la intro i pel resum en catal{\`a} %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%intro
+
+
+\newtheorem{th1}{Theorem}
+\newtheorem{prop1}[th1]{Proposition}
+\newtheorem{cor1}[th1]{Corollary}
+\newtheorem{lem1}[th1]{Lemma}
+\newtheorem{de1}[th1]{Definition}
+%catala
+
+\newtheorem{th2}{Teorema}
+\newtheorem{prop2}[th2]{Proposici{\'o}}
+\newtheorem{cor2}[th2]{Corol{\cdot}lari}
+\newtheorem{lem2}[th2]{Lema}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% local definitions for this paper
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%% aix{\`o} pels headings %%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhf{} \fancyhead[LE,RO]{\bfseries\thepage}
+\fancyhead[LO]{\bfseries\rightmark} \fancyhead[RE]{\bfseries\leftmark}
+
+\def\paginaenblanc{\newpage%
+\thispagestyle{empty}%
+\vspace*{2cm}%
+\newpage%
+\thispagestyle{empty}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% aux commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%==========================================================================
+% macros to support private authors' notes
+%==========================================================================
+\newif\ifprivate
+\privatetrue
+\def\xbar{\vskip0.09in\hrule\vskip0.06in}
+\def\private#1{\ifprivate \xbar {\em #1} \xbar
+\else \fi}
+\def\huh{\ifprivate ??? \marginpar{\Huge ???}
+\else \fi}
+\def\???{\ifprivate {\bf {???}} \marginpar{\begin{center}{\Huge {\bf ?}}\end{center}}
+\else \fi}
+%\def\???{\ifprivate {\bf {???}} \marginpar{{\Huge {\bf ?}}}
+%\else \fi}
+\marginparsep1mm
+\def\nota#1{\ifprivate  $\clubsuit$ \marginpar{\parbox[t]{2.4cm}{\begin{center}\tiny #1\end{center}}}
+\else \fi}
+\def\comment#1{\ifprivate \marginpar{\parbox[t]{2.4cm}{\begin{center}\tiny #1\end{center}}}
+\else \fi}
+%\def\nota#1{\ifprivate  $\clubsuit$ \marginpar{\parbox[t]{1.8cm}{\tiny #1}}
+%\else \fi}
+\def\privateeject{\ifprivate\eject\fi}
+%\def\???{{\bf {???}} \marginpar{{\Huge {\bf ?}}} }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%% definicions cap{\'\i}tol ""%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\av{\underline{a}}
+
+\def\Zr{\mathbb Z^r} \def\Nr{\mathbb N^r}
+\def\xv{\underline{x}}
+\def\yv{\underline{y}}
+\def\zv{\underline{z}}
+
+\newcommand{\Proj}{\operatorname{Proj}}
+\newcommand{\Spec}{\operatorname{Spec}}
+
+
+\def\HiRIM#1{H^i_{\mathcal M}(#1)}
+
+\newcommand{\im}{\operatorname{Im}}
+\renewcommand{\ker}{\operatorname{Ker}}
+\newcommand{\grade}{\operatorname{grade}}
+\newcommand{\Ext}{\operatorname{Ext}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\m}{\mathfrak m}
+\newcommand{\n}{\mathfrak n}
+\newcommand{\M}{\mathfrak m}
+%\newcommand{\cL}{{\mathcal L}}
+\newcommand{\cP}{{\mathcal P}}
+\newcommand{\cE}{{\mathcal E}}
+\newcommand {\ZZ}{\mathbb{Z}}
+\newcommand{\cS}{{\mathcal S}}
+\newcommand {\PP}{\mathbb{P}}
+
+\def\p{\mathfrak{p}}
+\def\q{\mathfrak{q}}
+\DeclareMathOperator{\de}{deg}
+
+\DeclareMathOperator{\Hl}{H}
+ \DeclareMathOperator{\h}{h}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\include{./definicions.tex}
+
+\end{document}
