@@ -1,1 +1,54 @@
-hola:
+\section{Definitions}
+
+This section will formalize a Tetris game and define the problem. We will follow the definition from \cite{TIH}.
+
+
+\begin{definition}
+  A \emph{board} B is an $n$ by $m$ grid. Each cell $\cell$, $i = 1\dots n$, $j = 1\dots m$ is \emph{filled} or \emph{unfilled}.
+\end{definition}
+
+The board will be indexed from bottom to top and from left to right. The cell $\cell[1][1]$ is in the bottom left of the board and $\cell[n][m]$ is the top right-most cell. \\
+
+The following definitions will define the pieces and how they interact with the board.
+
+\begin{definition}
+  A \emph{piece type} $t$ is one of the following (pieces). 
+\end{definition}
+
+\begin{definition}
+ A \emph{piece state} in a board $B$ is a tuple $ P = \piece$ where:
+  \begin{itemize}
+    \item $t$ is a piece type
+    \item $\theta$ is the \emph{orientation}, the number of degrees clockwise from the original piece. $ \theta \in \lbrace 0^\circ, 90^\circ, 180^\circ, 270^\circ \rbrace$
+    \item $\cell$ is the \emph{position} of the piece in of $B$
+    \item  $f$ indicates if the piece is \emph{fixed} or \emph{unfixed} in B.
+  \end{itemize}
+
+  We will refer to a piece sate as \emph{piece}.
+   
+\end{definition}
+
+\begin{definition}
+  Given a piece type $t$ and a board $B$, the piece $P_0 = \piece[t][0^\circ][n][\lfloor m / 2 \rfloor][\text{unfixed}]$ is the \emph{initial state} of the pice type of $t$ in the board $B$.
+\end{definition}
+
+
+The idea is to have only one active piece in a Tetris game. Only the piece that is moving has a state. When a piece reaches the \emph{fixed} state, is automatically merged with the board. Then the next piece starts in its initial state. In order to define how a piece moves thought the board, we need to define some \emph{moves} for changing the piece state.
+
+\begin{definition}
+  A \emph{rotaion model}
+\end{definition}
+
+\begin{definition}
+  A \emph{move} is a computable function that changes the state of a piece under certain conditions. If all the conditions are satisfied the move is said to be \emph{legal}, if any of the conditions are not satisfied the move is \emph{ilegal}. The following moves can be applied to a piece $P = \piece[t][\theta][i][j][\text{unfixed}]$. 
+  \begin{itemize}
+    \item \emph{clockwise rotation}
+    \item \emph{counterclockwise rotation}
+    \item \emph{slide to the left}
+    \item \emph{slide to the right}
+    \item \emph{drop by one row}
+    \item \emph{fix}
+  \end{itemize}
+\end{definition}
+
+

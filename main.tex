@@ -61,6 +61,12 @@
 \newcommand{\conjref}[1]{Conjecture~\ref{#1}}
 
 
+\NewDocumentCommand{\cell}{O{i} O{j}}{
+ \langle #1, #2 \rangle
+}
+\NewDocumentCommand{\piece}{O{t} O{\theta} O{i} O{j} O{f}}{
+ (#1, #2, \langle #3, #4 \rangle, #5 )
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % environments per la intro i pel resum en catal{\`a} %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -170,6 +176,7 @@
 \DeclareMathOperator{\Hl}{H}
  \DeclareMathOperator{\h}{h}
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -182,5 +189,8 @@
 \begin{document}
 
 \include{./definicions.tex}
+
+\bibliographystyle{plain}
+\bibliography{references} 
 
 \end{document}
