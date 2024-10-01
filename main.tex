@@ -9,7 +9,7 @@
 %\usepackage[dvips]{graphics}
 %\usepackage{moreverb}
 \usepackage{multicol}
-
+\usepackage{hyperref}
 \usepackage[english]{babel}
 %\usepackage{epsfig}
 %\usepackage{rotating}
@@ -60,6 +60,15 @@
 \newcommand{\remref}[1]{Remark~\ref{#1}}
 \newcommand{\conjref}[1]{Conjecture~\ref{#1}}
 
+
+\newcommand{\OO}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{pieces/pieces_O.pdf}}}\,}O}
+\newcommand{\TT}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{pieces/pieces_T.pdf}}}\,}T}
+\newcommand{\LL}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{pieces/pieces_L.pdf}}}\,}L}
+\newcommand{\JJ}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{pieces/pieces_J.pdf}}}\,}J}
+\renewcommand{\SS}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{pieces/pieces_S.pdf}}}\,}S}
+\newcommand{\ZZ}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{pieces/pieces_Z.pdf}}}\,}Z}
+\newcommand{\II}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{pieces/pieces_I.pdf}}}\,}I}
+\newcommand{\ALL}{\II, \allowbreak \OO, \allowbreak \TT, \allowbreak \SS, \allowbreak \ZZ, \allowbreak \JJ, \allowbreak \LL}
 
 \NewDocumentCommand{\cell}{O{i} O{j}}{
  \langle #1, #2 \rangle
@@ -165,7 +174,6 @@
 %\newcommand{\cL}{{\mathcal L}}
 \newcommand{\cP}{{\mathcal P}}
 \newcommand{\cE}{{\mathcal E}}
-\newcommand {\ZZ}{\mathbb{Z}}
 \newcommand{\cS}{{\mathcal S}}
 \newcommand {\PP}{\mathbb{P}}
 

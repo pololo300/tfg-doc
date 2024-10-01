@@ -3,7 +3,7 @@
 *.fls
 *.log
 *.synctex.gz
-*.pdf
+main.pdf
 *.bbl
 *.blg
 *.bcf-SAVE-ERROR

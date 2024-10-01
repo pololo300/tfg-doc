@@ -1,6 +1,6 @@
 \section{Definitions}
 
-This section will formalize a Tetris game and define the problem. We will follow the definition from \cite{TIH}.
+Formalization of a Tetris game and definition of the problem. We will follow the definition from \cite{TIH}.
 
 
 \begin{definition}
@@ -12,7 +12,7 @@ The board will be indexed from bottom to top and from left to right. The cell $\
 The following definitions will define the pieces and how they interact with the board.
 
 \begin{definition}
-  A \emph{piece type} $t$ is one of the following (pieces). 
+  A \emph{piece type} $t$ is one of the following:  \ALL. 
 \end{definition}
 
 \begin{definition}
@@ -39,8 +39,10 @@ The idea is to have only one active piece in a Tetris game. Only the piece that 
   A \emph{rotaion model}
 \end{definition}
 
+VAL LA PENA DEFINIR EL CONJUT DE TOTS ELS ESTATS POSSIBLES?
+
 \begin{definition}
-  A \emph{move} is a computable function that changes the state of a piece under certain conditions. If all the conditions are satisfied the move is said to be \emph{legal}, if any of the conditions are not satisfied the move is \emph{ilegal}. The following moves can be applied to a piece $P = \piece[t][\theta][i][j][\text{unfixed}]$. 
+  A \emph{move} is a computable function that changes the state of a piece under certain conditions. The following moves can be applied to a piece $P = \piece[t][\theta][i][j][\text{unfixed}]$. 
   \begin{itemize}
     \item \emph{clockwise rotation}
     \item \emph{counterclockwise rotation}
@@ -49,6 +51,25 @@ The idea is to have only one active piece in a Tetris game. Only the piece that 
     \item \emph{drop by one row}
     \item \emph{fix}
   \end{itemize}
+  If all the conditions are satisfied the move is said to be \emph{legal}, if any of the conditions are not satisfied the move is \emph{ilegal}. 
 \end{definition}
 
+Let's now define the \emph{trajectory} of a piece type in a Tetris game. Intuitively the trajectory starts when the piece is given to the player  and ends when he fixes the piece in the board.
 
+
+\begin{definition}
+ Let $B$ be a board and $t$ a piece type. Let $P_0$ be the initial state of the piece type $t$. Then a sequence of $k$ moves $\sigma = (m_1, ..., m_k)$ to the piece state after $i$ moves is a \emph{trajectory} if:
+
+ \begin{itemize}
+  \item the move $m_i$ over $P_i$ is a valid move for all $i = 1 \dots k$
+  \item and $m_k$ is a \emph{fix} move.
+ \end{itemize}
+ 
+ Where $P_{i+1} = m_i(P_i)$ is the piece stat in $B$ after $i$ moves.
+\end{definition}
+
+After a piece trajectory a new board can be defined.
+
+\begin{definition}
+  Given a board $B$, a piece $p$ and some trajectory $t$, PRODUCTEd a new board $B'$ :wa:wa
+\end{definition}
