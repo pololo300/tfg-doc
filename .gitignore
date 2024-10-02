@@ -7,3 +7,5 @@ main.pdf
 *.bbl
 *.blg
 *.bcf-SAVE-ERROR
+*.s
+*.synctex(busy)
