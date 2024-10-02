@@ -9,3 +9,4 @@ main.pdf
 *.bcf-SAVE-ERROR
 *.s
 *.synctex(busy)
+*.out
