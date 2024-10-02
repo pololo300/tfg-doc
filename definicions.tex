@@ -1,4 +1,4 @@
-\section{Definitions}
+\section{Game Definitions}
 
 Formalization of a Tetris game and definition of the problem. A \emph{Tetris game} will refer to the hole game with its rules, conditions,... and a \emph{tetris match} will refer to a concrete Tetris game instance (no se com dir-ho). We will follow the formalization from \cite{TIH}.
 
@@ -7,7 +7,7 @@ Formalization of a Tetris game and definition of the problem. A \emph{Tetris gam
   A \emph{board} B is an $n$ by $m$ grid. Each cell $\cell$, $i = 1\dots n$, $j = 1\dots m$ is \emph{filled} or \emph{unfilled}.
 \end{definition}
 
-The board will be indexed from bottom to top and from left to right. The cell $\cell[1][1]$ is in the bottom left of the board and $\cell[n][m]$ is the top right-most cell.\\
+Two conditions are imposed over the initial board, it can't have filled rows and no empty rows can appear under filled cells.  The board will be indexed from bottom to top and from left to right. The cell $\cell[1][1]$ is in the bottom left of the board and $\cell[n][m]$ is the top right-most cell.\\
 
 The following definitions will define the pieces and how they interact with the board.
 
@@ -107,11 +107,114 @@ We have now all the components of a Tetris match.
   \end{itemize}
 \end{definition}
 
-Finally, the Tetris game problem is:
+\section{Problem}
+
+All the problems share the same formulation of the problem. The \textsc{Tetirs} problem is:
+
 \begin{itemize}
-  \item \textbf{Input} (\textit{a Tetris game}) : a board $B$ and a sequence $(t_1, t_k)$ of $k$ pieces types.
+  \item \textbf{Input} (\textit{a Tetris game}) : $\mathcal{G} = (B,(t_1,\dots,t_k))$ an initial board and a sequence of $k$ pieces types.
   
-  \item \textbf{Ouput} (\textit{a objective funcwtion over all matches of the game}): Does exisit a game $\Sigma$ such that $\Phi ( B, G )$ holds? 
+  \item \textbf{Output} : Does exist a match $\Sigma$ such that $\Phi ( \mathcal{G}, \Sigma )$ holds? 
 \end{itemize}
 
-Where $\Phi$ is computable objective function that only takes into account the final state of the pieces, ignoring the piece trajectory.
+Where $\Phi(\mathcal{G},\Sigma)$ is computable objective function that only takes into account the final state of the pieces, ignoring the piece trajectory (\emph{checkable and acyclic}). 
+
+
+We will divide the problem variants classification in two parts: variations on the objective function and variations on the game formulation.
+
+\subsection{Objective functions} 
+
+Will refer to the \textsc{Tetris} problem with the objective function $\Phi$ as $\textsc{Tetris} [ \Phi ]$. The following are objective functions:
+
+\begin{itemize}
+  \item \texttheo{k-cleared-rows}: in the game $\mathcal{G}$ , does $\sigma$ clear at least $k$ rows?
+  \item \texttheo{k-tetrises}: in the game $\mathcal{G}$ , does $\sigma$ contain at least $k$ tetrises?
+  \item \texttheo{h-height-filled}: in the game $\mathcal{G}$ , does $\sigma$ never fill a gridsquare above height $h$?
+  \item \texttheo{p-placed-pices}: in the game $\mathcal{G}$ , does $\sigma$ place at least $p$ pieces before losing.
+\end{itemize} are all in \npc (\cite{TIH}). The corresponding optimization problems are also \npc.
+
+The two most popular variations are:
+
+\begin{itemize} 
+  \item \label{var:clearing} \texttheo{clearing}: in the game $\mathcal{G}$, does $\sigma$ leave every cell of the board unfilled?
+  \item \label{var:survival}\texttheo{survival}: is equivalent to \texttheo{n-height-filled}, where $n$ is the height of board $B$. This is finding a sequence $\Sigma$ that is not a loss.
+\end{itemize}
+
+\subsection{Game variations}
+
+A game variation is changing some parameter that appears during the definition of the game. When showing results, if the objective function is not specified, the result is assumed to be valid under \texttheo{survival} and \texttheo{clearing}. The following parameters of the game can be changed: 
+
+\begin{itemize}
+  \item \textbf{Pieces:} changing the pieces set of a Tetris game
+  \item \textbf{Moves:} extending, reducing or changing the moves that can be applied to the pieces. 
+  \item \textbf{Board:} fixing the board dimensions or impose restriction of the initial board.
+  \item \textbf{Pieces sequences:} imposing restriction over the sequence of pieces.
+\end{itemize}
+
+\subsubsection{Pieces variations:}
+
+All variations in this section consists on changing the \emph{piece types}. The problem formalization is the same but, if new pieces apear, appropriately changing the \emph{move} functions for the new pieces types. 
+
+\begin{itemize} 
+  \item  \textbf{1 piece:} for any 1-size subset of $\{\ALL\}$ the problem is open.
+  \item  \textbf{2 pieces:} for any 2-size subset of $\{\ALL\}$ \texttheo{clearing} and \texttheo{survival} is \npc. (under SRS) \cite{TWFP}.
+  \item  \textbf{monomies:} \cite{TT}
+  \item  \textbf{domonies:} \cite{TT}
+  \item  \textbf{trimones:} \cite{TT}
+  \item  \textbf{k-monies:} \cite{TT}
+  \item  \textbf{rectangular pieces:} \cite{TWRP}
+
+\end{itemize}
+
+\subsubsection{Moves variations}
+
+(Explica el SRS)
+
+Changing the set of available moves that a player can apply to a given piece we obtain different variants.
+
+\begin{itemize}
+  \item \textbf{No rotation:} removing the rotation moves.
+
+  \item \textbf{Hard Drop:} when playing the Tetris video game, specially in the initial rounds of a game, the player can hard drop a piece in order to avoid dropping the piece one row at a time. \emph{drop} and \emph{fix} are removed from the set of moves, and \emph{hard-drop} is added. When applied this move, the piece moves maximally downward before fixing into place.
+
+    \begin{itemize}
+      \item Tetris with Hard Drop is \npc  even if the pieces set is restricted to $\{ \II, \OO \}$ \cite{TWFP}. 
+      \item Tetris with Hard Drop is \nph  even if the pieces set is restricted to $\{ \II, \OO, \TT\}$ \cite{TWFP}. 
+    \end{itemize}
+    
+
+  \item \textbf{20-G:} the pieces in a Tetris video game fall faster as the game progresses. (explicacio). 
+
+    \begin{itemize}
+      \item Tetris with 20-G is \npc  even if the pieces set is restricted to $\{ \II, \OO \}$ \cite{TWFP}. 
+      \item Tetris with 20-G is \nph  even if the pieces set is restricted to $\{ \II, \OO, \TT\}$ \cite{TWFP}. 
+    \end{itemize}
+
+  \item \textbf{Hold-Function:} in this version the player has a \emph{box} to put aside a piece for a later use. Open problem.
+\end{itemize}
+
+
+
+\subsubsection{Board variations}
+
+In the main problem the board $B$ is an $n$ by $m$ grid, fixing rows or columns to a constant value gives different problems. \cite{TCB}.
+
+
+An open problem posted in some papers is to determine the complexity when the board is empty.
+
+Explica millor.
+
+\subsubsection{Pieces sequences:}
+
+7-bag randomizer. random generation of the sequence. open problem. Explica millor.
+
+
+\section{Related problems}
+
+Other problems related to Tetris:
+
+\begin{itemize}
+  \item Tetris Decidability: \cite{TAD}
+  \item Tetris Competitive:  \cite{TINC}
+  \item Tetris strategies:  \cite{TINC}
+\end{itemize}
