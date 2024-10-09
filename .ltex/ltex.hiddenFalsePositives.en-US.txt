@@ -1,0 +1,6 @@
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qk-cleared-rows: in the game \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, does \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q clear at least \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q rows?\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qk-tetrises: in the game \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, does \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q contain at least \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q tetrises?\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qh-height-filled: in the game \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, does \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q never fill a cell above height \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q?\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qp-placed-pices: in the game \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, does \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q place at least \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q pieces before losing.\\E$"}
+{"rule":"REP_PASSIVE_VOICE","sentence":"^\\QIn \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q a piece variation is introduced.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QThe main result is that every reasonable Tetris configuration is constructible, if a simple parity condition on the configuration is met.\\E$"}
