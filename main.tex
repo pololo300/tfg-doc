@@ -18,7 +18,8 @@
 \usepackage{tikz}
 \usepackage{tabls} %per tenir m{\'e}s control sobre l'espai en les taules nom{\'e}s cal aquest paquet
 \usepackage{indentfirst} %per comen\c{c}ar primer parragraf de seccio o capitol amb indent
-
+\usepackage{imakeidx}
+\makeindex
 
 \usepackage[T1]{fontenc}
 % \usepackage[sc]{mathpazo}
@@ -74,7 +75,7 @@
  \langle #1, #2 \rangle
 }
 \NewDocumentCommand{\piece}{O{t} O{\theta} O{i} O{j} O{f}}{
- (#1, #2, \langle #3, #4 \rangle, #5 )
+ (#1, \allowbreak #2, \allowbreak \langle #3, \allowbreak #4 \rangle,  \allowbreak #5 )
 }
 
 
@@ -83,8 +84,8 @@
 \newcommand{\npc}{\textnormal{\textsf{NP-complete} }}
 \newcommand{\pp}{\textnormal{\textsf{P}}}
 \newcommand{\nph}{\textnormal{\textsf{NP-hard} }}
-\newcommand{\survival}{\texttheo{survival}}
-\newcommand{\clearing}{\texttheo{clearing}}
+\newcommand{\survival}{\texttheo{survival }}
+\newcommand{\clearing}{\texttheo{clearing }}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % environments per la intro i pel resum en catal{\`a} %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -205,9 +206,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
+\makeatletter
+\def\old@comma{,}
+\catcode`\,=13
+\def,{%
+  \ifmmode%
+    \old@comma\discretionary{}{}{}%
+  \else%
+    \old@comma%
+  \fi%
+}
+\makeatother
+
 \include{./definicions.tex}
 
 \bibliographystyle{plain}
 \bibliography{references} 
 
+\printindex
 \end{document}

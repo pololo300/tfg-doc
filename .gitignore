@@ -10,3 +10,6 @@ main.pdf
 *.s
 *.synctex(busy)
 *.out
+*.idx
+*.ilg
+*.ind

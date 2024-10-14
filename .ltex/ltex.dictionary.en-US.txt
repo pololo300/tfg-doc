@@ -3,3 +3,13 @@ tetrises
 Monominoes
 Trominoes
 Pentominoes
+constructible
+typcaly
+polyomino
+Polyomino
+monomino
+tromino
+tetromino
+pentomino
+tetrominoes
+polyominos
