@@ -13,3 +13,11 @@ tetromino
 pentomino
 tetrominoes
 polyominos
+polyomino
+polyomino
+polyominoes
+monomino
+tromino
+tetromino
+pentomino
+polyominoes

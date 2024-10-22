@@ -1,0 +1,101 @@
+\section{Results}
+
+In this section we resume the most relevant results, grouped by the paper in wich they appear. They are sorted by publication date. 
+
+\subsection{Tetris is hard, even to approximate}
+
+The first results about Tetris complexity appear in \cite{TIH}. The results are the following:
+
+\begin{theorem}
+  Tetris is \nph to optimize (or approximate) with the objectives, \texttheo{k-cleared-rows}, \texttheo{k-tetrises} \texttheo{h-height-filled} and \texttheo{p-placed-pices}. It remains \nph even if:
+  \begin{itemize}
+    \item The player is restricted to two rotation/translation moves before each piece drops in height.
+    \item Pieces are restricted to $\{\LL, \SS, \II, \OO\}$ or $\{\LL, \ZZ, \II, \OO\}$ plus at least one other piece.
+    \item Losses are not triggered until after filled rows are cleared.
+    \item Rotations follow any reasonable rotation model.
+  \end{itemize}
+\end{theorem}
+
+\subsection{Total Tetris: Tetris with Monominoes, Dominoes, Trominoes, Pentominoes, ...}
+
+In \cite{TT} a piece variation are explored. For $k \geq 1$ problems, k\textsc{-tris} and \textsc{NoRotation-}k\textsc{-tris}, with \survival and \clearing are all almost solved. Results are presented in Table~\ref{tab:tt}.
+
+\begin{table}[h!]
+\centering
+\label{tab:tt}
+\begin{tabular}{|c || c | c || c | c ||} 
+ \hline
+  & \multicolumn{2}{| c ||}{\survival} & \multicolumn{2}{| c |}{\clearing} \\
+ \hline
+  & with rotation & no rotation & with rotation & no rotation \\
+ \hline               
+ $k = 1$ & \pp  & \pp  & \pp  & \pp \\ 
+ \hline                             
+ $k = 2$ & Open & Open & Open & \npc \\
+ \hline                             
+ $k = 3$ & Open & \npc & \npc & \npc\\
+ \hline                             
+ $k = 4$ & \npc & \npc & \npc & \npc\\
+ \hline                             
+ $k > 5$ & \npc & \npc & \npc & \npc\\
+ \hline
+\end{tabular}
+
+\caption{\cite{TT} results with rotation}
+\end{table}
+
+
+\subsection{Tetris is NP-hard even with O(1) rows or columns}
+
+In \cite{TCB} board variations are explored, they use the \emph{partial lock out rule}.
+
+\textbf{NOTA:} es podria afegir a la defincio del poblema algo (per exemple un lleguntage regular) per restringir el cojunt de configuracions inicials del taulell. No ho he posat perque me sembla que ja sobrecarregaria la definicio. Queda pendent parlar-ho. També passa el mateix amb restriccions sobre la sequecia de peces, es podria demanar un llenguatge regular que definis la sequencia.
+
+\begin{itemize}
+  \item \textsc{Empty $(\leq)k$-\textsc{tris}}: $(\leq)k$-\textsc{tris} where all the board cells are initially unfilled.
+\end{itemize}
+
+Results with this variation are in Table~\ref{tab:tcb}. 
+
+\begin{table}[h!]
+\centering
+\label{tab:tcb}
+\begin{tabular}{|c | c | c | c | c |} 
+ \hline
+ Rows   & Columns & Empty  & Piece Sizes  & Complexity      \\
+ \hline
+ \hline
+ $1   $ & $O(n) $ & no     & $O(n)    $ & strongly \nph   \\ \hline
+ $1   $ & $O(n) $ & yes    & $O(n)    $ & linear          \\ \hline
+ $1   $ & $O(n) $ & no     & $k       $ & linear          \\ \hline
+ $2   $ & $O(n) $ & yes    & $O(n)    $ & strongly \nph   \\ \hline
+ $3   $ & $O(n) $ & no     & $4       $ & Open            \\ \hline
+ $4   $ & $O(n) $ & no     & $4       $ & strongly \nph   \\ \hline
+ $O(n)$ & $1    $ & no     & $O(n)    $ & linear          \\ \hline
+ $O(n)$ & $2    $ & no     & $O(n)    $ & polynomial      \\ \hline
+ $O(n)$ & $3    $ & yes    & $O(n)    $ & strongly \nph   \\ \hline
+ $O(n)$ & $3 - 7$ & no     & $4       $ & Open            \\ \hline
+ $O(n)$ & $8+   $ & no     & $4       $ & strongly \nph   \\ \hline
+ $O(n)$ & $8    $ & yes    & $\leq 65 $ & strongly \nph   \\
+ \hline
+\end{tabular}
+\caption{\cite{TT} results table}
+\end{table}
+
+\subsection{Tetris with Few Piece Types}
+
+In \cite{TWFP} they treat variations with fewer pieces, they only use a subset of the 7 available pieces types of Tetris. It uses the SRS rotation model.
+
+\vspace{10px}
+
+\textbf{Main Result:} for every 2-sized subset of $\{\ALL\}$, Tetris \survival and \clearing is \nph under SRS.
+
+\vspace{10px}
+\texttheo{20-G} and \texttheo{Hard-Drop} movement variations are introduced, and some results provided.
+
+\vspace{10px}
+\textbf{Result:} Tetris \texttheo{20-G} and Tetris \texttheo{Hard-Drop} is \npc  even if the pieces set is restricted to $\{ \II, \OO \}$ \cite{TWFP}. 
+
+
+\textbf{Result:} if we allow the piece $\{ \TT \}$, the above result can be extended to \nph.
+

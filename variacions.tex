@@ -1,0 +1,82 @@
+\section{Game variations}
+
+\textsc{Tetris}'s inputs are the board and the sequence of pieces, but to define the problem all other parameters need to be specified. To define a game we need to provide: the possible board dimensions, polyominoes that will appear in the game, the available moves and the initial state function.
+
+In order to present all variations we will first define the basic Tetris, the problem presented in \cite{TIH}. Then a Tetris variation is the basic Tetris problem, but with some changes on the parameters. Two variations can be combined to produce a new one. Variations are grouped by the parameters they change of the definition.
+
+We are introducing also some notation to define different Tetris games. 
+
+\subsection{Basic Tetris}
+
+The problem is:
+
+$$\textsc{Tetris}\left[ \mathbb{N} \times \mathbb{N},T_4,\varphi_0, \{s_l,s_r, r_+, r_-, d, f \},\Phi \right]$$
+
+Let's break down the definition into parts. $\mathbb{N} \times \mathbb{N}$ indicates that the problem instances contain boards of arbitrary dimensions. $T_4$ indicates that all the instances use the classic set of pieces, the ones made up by joining 4 blocks. $\varphi_0$ is the initial state function that places the pieces in the top-middle of the board. The available moves in each match are: slide to the left, slide to de right, rotate clockwise, rotate counterclockwise, drop by one row and fix a piece. 
+
+For the objective function $\Phi$, \clearing or \survival will be both considered.
+
+
+\subsection{Pieces Variations}
+
+These variations change the set of polyominoes $T$ of the problem. 
+
+\begin{itemize}
+
+  \item $k\textsc{-tris} := \textsc{Tetris}[T = T_k]$ 
+
+  \item $\leq k\textsc{-tris} := \textsc{Tetris}[T = T_1 \cup \dots T_k]$
+
+\end{itemize}
+
+The first changes the classic $T_4$ polyominoes by $T_k$, the set that contains all the $k$-ominoes. The second one uses all the $q$-ominoes up to $k$. We can also consider variation with some specific pieces. For example, in \cite{TWFP}, the variation \emph{"Tetris with fewer pieces types"} uses subsets of $T_4$. We can write:
+
+$$\textsc{Tetris}[\{ \TT, \OO \}] := \textsc{Tetris}[T = \{ \TT, \OO \}]$$
+
+abusing the notation. The above problem is the basic Tetris restricting the tetrominoes to the two indicated pieces.
+
+
+\subsection{Board Variations}
+
+With boards, restricting the set of board dimensions, new variations appear.
+
+\begin{itemize}
+
+  \item $c\textsc{-column-Tetris} := \textsc{Tetris}[D = \mathbb{N} \times \{c\}]$
+  \item $r\textsc{-row-Tetris} := \textsc{Tetris}[D = \{r\} \times \mathbb{N} ]$
+\end{itemize}
+
+In this case $c$\textsc{-column-Tetris} and $r$\textsc{-row-Tetris} instances are a subset of basic Tetris instances, only admitting instances where the board width, respectively the height, is $c$, respectively $r$.
+
+\subsection{Moves Variations}
+
+Move variations cover a wither range of different games, making it more difficult to classify. Inset we present popular variations. The most simple game variation is:
+
+\begin{itemize}
+  \item $\textsc{Tetris-NoRotation} := \textsc{Tetris}[M = \{s_l, s_r, d, f\}]$
+\end{itemize}
+
+As the name indicates, in the matches of this problem the player cannot rotate the pieces. The following variations are motivated by the video game.
+
+
+When playing Tetris, specially in the initial rounds of a game, the player can hard drop a piece in order to avoid dropping the piece one row at a time. \emph{drop} and \emph{fix} are removed from the set of moves, and \emph{hard-drop} is added. Hard-dropping a piece moves it maximally downward before fixing into place. 
+
+\begin{itemize}
+  \item $\textsc{Tetris-HardDrop} := \textsc{Tetris}[M = \{ r_+, r_-, s_l, s_r, hd \}]$
+\end{itemize}
+
+In the video game the pieces fall faster as the player fixes pieces. This causes that, in large games, the player reaches a point where the pieces appear in the lowest empty postion (in the middle column).
+
+The next variation simulates this situation. So instead of periodically moving down one unit, all pieces move maximally down-ward instantly, and the player is not allowed to control how fast a piece moves downward. The player is still free to rotate or move the piece left or right before the piece locks. \emph{drop} move is removed, and the vertical position of the initial state of a piece is now the lowest possible.
+
+\begin{itemize}
+  \item $\textsc{Tetris-20G} := \textsc{Tetris}[\varphi = \varphi_{20g}, M = \{ r_+, r_-, s_l, s_r, f \}]$
+\end{itemize}
+
+Where $\varphi_{20g}$ is the mentioned initial state function. 
+
+\vspace{10px}
+Finally, in some video game implementations, the player has a box to put aside a piece for a later use. To define this variation we need to add this function to the set of available moves.
+
+\textbf{NOTA:} no es una funcio propiament, ja que pot retornar diferents valors per una mateixa entrada. No se com fer-ho encaixar.
+

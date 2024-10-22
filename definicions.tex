@@ -1,10 +1,10 @@
 \section{Game Definitions}
 
-In \cite{TIH} we can find a formalization of the Tetris game and a decisional/functional problem associated to it. Since the video game is played in finite board and a player can't win, the definition of the game introduces some variations to build a complexity problem.
+In \cite{TIH} we can find a formalization of the Tetris game and a decisional/functional problem associated to it. Since the video game is played in finite board and a player can't win, the definition of the game introduces some variations to build a decisional problem.
 
-In \cite{TT,TWFP,TCB,CTV,AVG} game variations are introduced without any formalization of the new emerging problems. We are going to provide a generalized Tetris game definition, following \cite{TIH}, which aims to include all possible game variations and the combination of these. Right after defining each part of the game, an example will be given of what be in the video game and what it is in the definition of \cite{TIH}. We will refer to \emph{video game} and \emph{base tetris} respectively.
+In \cite{TT,TWFP,TCB,CTV,AVG} game variations are introduced without any formalization of the new emerging problems. We are going to provide a generalized Tetris game definition, following \cite{TIH}, which aims to include all possible game variations and the combination of these. 
 
-A \emph{Tetris game} will refer to the hole game with its rules, configurations, pieces, ... and a \emph{tetris match} will refer to a concrete Tetris game instance (the sequence of moves that a player would play). 
+A \emph{game} will refer to the hole game with its rules, configurations, pieces, ... and a \emph{match} will refer to a concrete Tetris game instance (the sequence of moves that a player would play). 
 
 \begin{definition} \index{board}
   A \emph{board} \emph{B} is an $n$ by $m$ grid. Each cell $\cell$, $i = 1\dots n$, $j = 1\dots m$ is \emph{filled} or \emph{unfilled}.
@@ -12,39 +12,34 @@ A \emph{Tetris game} will refer to the hole game with its rules, configurations,
 
 The board will be indexed from bottom to top and from left to right. The cell $\cell[1][1]$ is in the bottom left of the board and $\cell[n][m]$ is the top right-most cell.
 
-In some results, the authors impose that the initial configuration must be constructible with the pieces and the rules of the game. This is that the initial configuration can be reached, with the game rules, from an empty board and an appropriate pieces sequences. Others, the only condition that is imposed on the initial configuration is that it can't have filled rows. We will not impose the board to be constructible, (parlem despres).
+In some results, the authors impose that the initial configuration must be constructible with the pieces and the rules of the game. This is that the initial configuration can be reached, with the game rules, from an empty board and with the appropriate pieces sequence. Others, the only condition that is imposed over the initial configuration is that it can't have filled rows. We will not impose the board to be constructible, (\textbf{NOTA:} no se com afegri-ho be). 
+% # TODO: parlar de constructabilitat
 
-\begin{example} 
-  \begin{itemize}
-    \item \textbf{Video game:} the board size is typcaly a unfilled 10x20 board.
-    \item \textbf{Base Tetris: } the board size has arbitrary dimensions.
-  \end{itemize}
-\end{example}
+\vspace{10px}
 
+Tetris classical pieces are made up by attaching 4 squares. Using the definition form \cite{TT, WikiFandom} we generalize the piece definition.
 
-Tetris classical pieces are made up by attaching 4 squares. In the variations we can find pieces types, in a game there are usually pieces with the same number of cubes. A general Tetris piece made up with $k$ cells is:
-
-\begin{definition} \index{$k$-omino} \index{polymonio}
-  A \emph{$k$-omino} is a piece made up of $k$ unit squares joined edge to edge. A \emph{polyomino} is a $k$-omino for some $k$.
+\begin{definition} \index{$k$-omino} \index{polyomino}
+  A \emph{polyomino} is a piece made up of unit squares joined edge to edge. A \emph{$k$-omino} is a polyomino made up with $k$ squares.
 \end{definition}
 
-For $k= 1,2,3,4,5$ the $k$-omio pieces are called respectively: \emph{monomino}, \emph{domino}, \emph{tromino}, \emph{tetromino} and \emph{pentomino}.
+For $k= 1,2,3,4,5, \dots$ the $k$-omio pieces are called respectively: \emph{monomino}, \emph{domino}, \emph{tromino}, \emph{tetromino}, \emph{pentomino}... The following defines sets of polyominoes.
 
-\begin{definition} \index{piece!types}
-  The \emph{piece types} $T$ is a set of polyominos. If $T$ contains all the $k$-omions we will write $T_k$.
+\begin{definition} \index{$T_k$}
+  $T_k$ is set of polyominoes containing all the possible $k$-omioes and nothing else.
 \end{definition}
 
-\begin{example} The \textbf{video game} and the \textbf{base Tetris} have the same  pieces types $T_4 = \{ \ALL \}$, all the tetrominoes.
+\begin{example} The original video game uses the piece types $T_4 = \{ \ALL \}$, all the tetrominoes.
 \end{example}
 
-Given the pieces and the board, we can now define how a piece interacts with a board. 
+The following definition will be used to define the trajectory of a polyomino thought the board.
 
 \begin{definition} \index{piece!state} \index{piece}
  A \emph{piece state} in a board $B$ is a tuple $ P = \piece$ where:
   \begin{itemize}
     \item $t \in T$, a polyomino.
     \item $\theta$ the \emph{orientation}, the number of degrees clockwise from the original piece. $ \theta \in \lbrace 0^\circ, 90^\circ, 180^\circ, 270^\circ \rbrace $.
-    \item $\cell$ is the \emph{position} of the piece in of $B$
+    \item $\cell$ is the \emph{position} of the piece in $B$.
     \item  $f$ indicates if the piece is \emph{fixed} or \emph{unfixed} in B.
   \end{itemize}
 
@@ -52,60 +47,93 @@ Given the pieces and the board, we can now define how a piece interacts with a b
    
 \end{definition}
 
+In the most common versions of Tetris a polyomino is given to the player by placing it in the top-middle of the board, but others don't. For example in a variation called \texttheo{20-G}, the polyomino is paced int the top-middle of the board and moved maximally downward. In order to include all variations in the formalization, the initial position will be a computable function.
 
-\begin{definition}
-  Given a piece type $t$ and a board $B$, the piece $P_0 = \piece[t][0^\circ][n][\lfloor m / 2 \rfloor][\text{unfixed}]$ is the \emph{initial state} of the piece type of $t$ in the board $B$.
+\begin{definition} \index{initial state}
+  An \emph{initial state} is a computable function $\varphi$ that given a board $B$ and a polyomino $t$, outputs an unfixed piece state $$\varphi(B,t) = P_0 = \piece[t][\theta][i][j][\text{unfixed}].$$
 \end{definition}
 
-The idea is to have only one active piece in a Tetris match. Only the piece that is moving has a state because when a piece reaches the \emph{fixed} state the piece is automatically merged with the board, and then the next piece starts in its initial state. In order to define how a piece moves thought the board, we need to define some \emph{moves} for changing the piece state.
+\begin{example} The initial state function that puts the piece at the top middle of the board without rotation is:
+$$\varphi_0(B,t) = \piece[t][0^\circ][n][\lfloor m / 2 \rfloor][\text{unfixed}]$$
 
-\begin{definition}
-  A \emph{move} is a computable function $m(B, P) = P'$ that given a board $B$ and a piece $P$ outputs a new piece $P'$. The following moves can be applied to an unfixed piece $P = \piece[t][\theta][i][j][\text{unfixed}]$. 
-  \begin{itemize}
-    \item $r_+$ a \emph{clockwise rotation:} if the rotated piece does not overlap with an occupied cell of the board, the output is 
-      $$r_+ (B, \piece[t][\theta][i][j][\text{unfixed}]) = \piece[t][\theta + 90^\circ][i][j][\text{unfixed}]$$
+Where $n$ and $m$ are the board dimensions.
 
-    \item $r_-$ a \emph{counterclockwise rotation:} the same but counterclockwise rotation. 
+\end{example}
 
-    \item $s_l$ a \emph{slide to the left:} if all the board cells adjacent to de left of the piece are not occupied, the output is:
-      $$s_l (B, \piece[t][\theta][i][j][\text{unfixed}]) = \piece[t][\theta][i][j-1][\text{unfixed}]$$
-    \item $s_r$ a \emph{slide to the right:} analogous to the slide to the left.
 
-    \item $d$ a \emph{drop by one row:} if all the board cells bellow the piece are not occupied the output is:
-      $$d (B, \piece[t][\theta][i][j][\text{unfixed}]) = \piece[t][\theta][i-1][j][\text{unfixed}]$$
+Notice that in our definition we only ask the piece state to be unfixed, the initial position and orientation are computed by the function. 
 
-    \item $f$ a \emph{fix:} if any of the board cells bellow the piece is occupied, the output is:
-      $$f (B, \piece[t][\theta][i][j][\text{unfixed}]) = \piece[t][\theta][i][j][\text{fixed}]$$
-  \end{itemize}
-  If the pre-conditions of a move are satisfied, the move is said to be \emph{legal}. If any of the conditions are not satisfied the move is \emph{illegal}.
+\vspace{10px}
+\textbf{NOTA:} faig que la funcio inicial pugi colocar una peca en un lloc que estigui parcialment ocupat? (per exmple quan el taulell esta molt ple?), o fem que caigui "de mes amunt i la pugi colocar on vulgi", axio va lligat amb el "partial lock out rule", explicat mes endevant.
+\vspace{10px}
+
+As in all variations, the player moves the pieces one at a time, so only the piece that is moving has a state. This is because when a piece is fixed (reaches the \emph{fixed} state) it merges automatically with the board, and then the next piece starts in its initial state. In order to define how a piece moves thought the board, we need to define some moves for changing the piece state. 
+
+\begin{definition} \index{move}
+  A \emph{move} is a computable function $m$ that given a board $B$ and an unfixed piece $P = \piece[t][\theta][i][j][\text{unfixed}]$ outputs a new piece $m(B, P) = P'$. A move has a \emph{precondition} that needs to be satisfied before the piece is moved. The move is said to be \emph{legal} if the preconditions are satisfied. If preconditions aren't satisfied the move is said to be \emph{illegal}.
 \end{definition}
 
-All the conditions can be computed in $\mathcal{O}(1)$, because only a constant numbers of cells are need to be visited every time. Let's now define the \emph{trajectory} of a piece type in a Tetris game. Intuitively the trajectory starts when the piece is given to the player, consists on a sequence of legal moves and ends when he fixes the piece in the board. 
+Some variations consist on changing the set of  moves available in a match, so we are not imposing any condition over this set. We present the most common move functions:
 
+\begin{itemize}
+  \item $r_+$ a \emph{clockwise rotation:} if the rotated piece does not overlap with an occupied cell of the board, the output is 
+    $$r_+ (B, \piece[t][\theta][i][j][\text{unfixed}]) = \piece[t][\theta + 90^\circ][i][j][\text{unfixed}]$$
 
-\begin{definition}
- Let $B$ be a board and $t$ a piece type. Let $P_0$ be the initial state of the piece type $t$. Then a sequence of $k$ moves $\sigma = (m_1, ..., m_k)$ to the piece state after $i$ moves is a \emph{trajectory} if:
+  \item $r_-$ a \emph{counterclockwise rotation:} the same but counterclockwise rotation. 
+
+  \item $s_l$ a \emph{slide to the left:} if all the board cells adjacent to de left of the piece are not occupied, the output is:
+    $$s_l (B, \piece[t][\theta][i][j][\text{unfixed}]) = \piece[t][\theta][i][j-1][\text{unfixed}]$$
+  \item $s_r$ a \emph{slide to the right:} analogous to the slide to the left.
+
+  \item $d$ a \emph{drop by one row:} if all the board cells bellow the piece are not occupied the output is:
+    $$d (B, \piece[t][\theta][i][j][\text{unfixed}]) = \piece[t][\theta][i-1][j][\text{unfixed}]$$
+
+  \item $f$ a \emph{fix:} if any of the board cells bellow the piece is occupied, the output is:
+    $$f (B, \piece[t][\theta][i][j][\text{unfixed}]) = \piece[t][\theta][i][j][\text{fixed}]$$
+
+  \item $hd$ a \emph{hard drop:} the piece is moved maximally downwards and fixed.
+    
+\end{itemize}
+
+All the conditions can be computed in $\mathcal{O}(1)$, because only a constant numbers of cells are need to be visited every time. 
+
+\vspace{10px}
+
+\textbf{NOTA/Observations:} The above definitions are quite ambiguous, and some game variations change some small details in order to prove their results. For example, there is no unique way of rotating a piece in most situations, for example the $\II$ piece. The following details this small changes.
+
+The \emph{lock out/partial lock rule} involves the fix move preconditions. The \emph{lock out rule} states that if any "square" of the piece is outside the board, the piece cannot be fixed. In contraposition, the \emph{partial lock out rule} states that if any of the "squares" of a piece is inside the board, the piece can be fixed. By default, we will use the \emph{lock out rule}.
+  
+The rotation moves, $r_+$ and $r_-$, are also  ambiguous, since some pieces don't have a unique rotation. A pair of two rotation moves is called a \emph{rotation model}. A rotation model is called \emph{reasonable} if, intuitively, the model simply allows for the turning of a piece on the board without
+any unnatural powers of translation, such as "jumping" to a distant point in the board. The simplest (reasonable) rotation model rotates a piece from its center (the piece state position), if the rotated piece doesn't overlap with any piece it outputs the new piece state.  
+
+An extended rotation model from this one is the Super Rotation System, also reasonable. This model, after rotating a piece, tries shot translations if the rotated piece overlaps with some occupied cell. If any of the translations leaves the piece in a unfilled positon, the model outputs this new piece state.
+
+\vspace{10px}
+Let's now define the \emph{trajectory} of a piece type in a Tetris game. Intuitively the trajectory starts when the piece is given to the player, continues with a sequence of legal moves and ends when the piece is fixed. 
+
+\begin{definition} \index{trajectory}
+  Let $B$ be a board, $t$ a polyomino and $\varphi$ an initial state. Let $P_0 = \varphi(B,t)$ be the initial state of the polyomino $t$. Then a sequence of $k$ moves $\sigma = (m_1, ..., m_k)$ is a \emph{trajectory} for $t$ if:
 
  \begin{itemize}
-  \item the move $m_i$ over $P_i$ is a legal move for all $i = 1 \dots k$
-  \item and $m_k = f$ is a \emph{fix} move.
+   \item the move $m_{i}$ over $P_{i-1}$ is a legal move for all $i = 1 \dots k$
+  \item and $P_k$ is fixed.
  \end{itemize}
  
- Where $P_{i+1} = m_i(P_i)$ is the piece stat in $B$ after $i$ moves.
+ Where $P_{i+1} = m_{i+1}(B,P_i)$ is the piece stat in $B$ after $i$ moves.
 \end{definition}
 
-The number of moves of a trajectory could be limited by $\mathcal{O}(n \cdot m)$?
+In our game there is no notion for time, and pieces aren't dropped by one row after some amount of time, so the number of moves in a trajectory is not limited. For example the player can rotate the piece clockwise indefinitely. We can fix this by limiting the number of moves by some constant $\mathcal{O}(n \cdot m)$, that lets the player place the piece anywhere on the board.
 
-With a board and a trajectory we need to define how we merge both. The resulting board will be the merged board. 
+One of the most characteristic thing about Tetris is rows clearing. After we fix a piece the game clears the filled rows. With a board and a trajectory we need to define how we merge both. 
 
-\begin{definition}
+\begin{definition} \index{merged game board}
   Given a board $B$ and trajectory $\sigma = (m_1, ..., m_k)$ of a given piece type $t$ the \emph{merged game board} $B'$ is defined as follows:
   \begin{enumerate}
     \item $B'$ is initially $B$.
     \item The cells of $B$ corresponding to the last piece state of the trajectory are filled in $B'$.
     \item For every filled row $r$ of $B'$:
       \begin{enumerate}
-        \item Replace each row $r' > r$ by $r'+1$.
+        \item Replace each row $r' \geq r$ by $r'+1$.
         \item Clear (set all cells to unfilled) of row $m$.
       \end{enumerate}
   \end{enumerate}
@@ -113,8 +141,8 @@ With a board and a trajectory we need to define how we merge both. The resulting
 
 We have now all the components of a Tetris match.
 
-\begin{definition}
-  Given a board $B$ and a sequence of $k$ pieces types $P = (t_1,\dots,t_k)$ a \emph{Tetris match} $\Sigma$ is a sequence
+\begin{definition} \index{match}
+  Given a board $B$ and a sequence of $k$ polyominoes $P = (t_1,\dots,t_k)$ a \emph{match} $\Sigma$ is a sequence
   $$ B = B_0, \sigma_1, B_1, \sigma_2, B_2, \dots  \sigma_q, B_q, \; \; q \leq k$$ 
   where:
   \begin{itemize}
@@ -124,24 +152,33 @@ We have now all the components of a Tetris match.
   \end{itemize}
 \end{definition}
 
+The third condition, $q < k$ happens when the player cannot apply any move to the piece, because any precondition is satisfied (this would typically whappen when the board is filled and the initial state puts the piece in an occupied cell).
+
 \section{Problem}
 
-All the problems share the same formulation of the problem. The \textsc{Tetirs} problem is:
+All the problems share the same formulation. Given a set of polyominoes T, a.,The \textsc{Tetirs} problem is:
 
-\begin{itemize}
-  \item \textbf{Input} (\textit{a Tetris game}) : $\mathcal{G} = (B,(t_1,\dots,t_k))$ an initial board and a sequence of $k$ pieces types.
+\begin{definition}[\textsc{Tetris}] \index{\textsc{Tetris}}
+  Given: 
+  \begin{itemize}
+    \item $D \subset \mathbb{N} \times \mathbb{N}$ a set of board dimensions.
+    \item a set of polyominoes $T$
+    \item an initial state function $\varphi$
+    \item a set of moves $M$
+    \item objective fucntion $\Phi$
+  \end{itemize}
+    the problem $\textsc{Tetris}[D,T,\varphi,M,\Phi]$ is as follows:
   
-  \item \textbf{Output} : Does exist a match $\Sigma$ such that $\Phi ( \mathcal{G}, \Sigma )$ holds? 
-\end{itemize}
+  \begin{itemize}
+    \item \textbf{Input}: $\mathcal{G} = (B,(t_1,\dots,t_k))$ an initial board $B$ with dimension in $D$ and a sequence of $k$ polyominoes, where $t_i \in T$ for $i = 1,\dots,k$.
+    
+    \item \textbf{Output} : Does exist a match $\Sigma$, with initial function $\varphi$ and moves $M$, such that $\Phi ( \mathcal{G}, \Sigma )$ holds? 
+  \end{itemize}
 
-Where $\Phi(\mathcal{G},\Sigma)$ is computable objective function that only takes into account the final state of the pieces, ignoring the piece trajectory (\emph{checkable and acyclic}). 
 
+\end{definition}
 
-We will divide the problem variants classification in two parts: variations on the objective function and variations on the game formulation.
-
-\subsection{Objective functions} 
-
-Will refer to the \textsc{Tetris} problem with the objective function $\Phi$ as $\textsc{Tetris} [ \Phi ]$. The following are objective functions:
+An objective function $\Phi(\mathcal{G},\Sigma)$ is computable \emph{checkable and acyclic} if it takes only into account the final state of the pieces, ignoring the piece trajectory. The following are objective functions:
 
 \begin{itemize}
   \item \texttheo{k-cleared-rows}: in the game $\mathcal{G}$, does $\sigma$ clear at least $k$ rows?
@@ -152,223 +189,8 @@ Will refer to the \textsc{Tetris} problem with the objective function $\Phi$ as 
 
 The two most popular variations are:
 
-\begin{itemize} 
+\begin{itemize} \index{\clearing} \index{\survival}
   \item \clearing: in the game $\mathcal{G}$, does $\sigma$ leave every cell of the board unfilled?
   \item \survival: is equivalent to \texttheo{n-height-filled}, where $n$ is the height of board $B$. This is finding a sequence $\Sigma$ that is not a loss.
 \end{itemize}
 
-\section{Game variations and Results}
-
-Game variations are obtained tweaking definitions of the game. The following parameters of the game can be changed: 
-
-\begin{itemize}
-  \item \textbf{Pieces:} changing the pieces set of a Tetris game
-  \item \textbf{Moves:} extending, reducing or changing the moves that can be applied to the pieces. 
-  \item \textbf{Board:} fixing the board dimensions or impose restriction of the initial board.
-  \item \textbf{Pieces sequences:} imposing restriction over the sequence of pieces.
-\end{itemize}
-
-The following papers provide results on Tetris and its variations.
-
-\subsection{Tetris is hard, even to approximate}
-
-The first results about Tetris complexity appear in \cite{TIH}. The results are the following:
-
-\begin{theorem}
-  Tetris is \nph to optimize (or approximate) with the objectives, \texttheo{k-cleared-rows}, \texttheo{k-tetrises} \texttheo{h-height-filled} and \texttheo{p-placed-pices}. It remains \nph even if:
-  \begin{itemize}
-    \item The player is restricted to two rotation/translation moves before each piece drops in height.
-    \item Pieces are restricted to $\{\LL, \SS, \II, \OO\}$ or $\{\LL, \ZZ, \II, \OO\}$ plus at least one other piece.
-    \item Losses are not triggered until after filled rows are cleared.
-    \item Rotations follow any reasonable rotation model.
-  \end{itemize}
-\end{theorem}
-
-A \emph{reasonable rotation model} is a generalization of the $\{r_+,r_-\}$ moves, extending the available rotations for a piece in a board. The two rotation functions are reasonable if some common sense conditions, defined in \cite{TIH}.
-
-OPEN PROBLEMS?
-
-\subsection{Total Tetris: Tetris with Monominoes, Dominoes, Trominoes, Pentominoes, ...}
-
-In \cite{TT} a piece variation is introduced. $k$-\textsc{tris} changes the pieces types by changing the number of \emph{cells} ($k$) that form the piece types. The  set of pieces types in $k$-\textsc{tris} is all possible pieces of $k$ cells.
-
-In the classical Tetris is $4$-\textsc{tris}, where 7 possible pieces can be built. For $k = 1$ one piece types is available (a cell), for $k=2$ also one piece type is only available (two adjacent cells), and so on. 
-
-The formalization is almost the same as the one described in this document. The set of piece types varies depending on $k$, and each respective center. Varies depending on $k$. The \emph{moves} describing each piece state transformation is appropriately modified to fit the new piece types. Results are presented in Table~\ref{tab:tt} 
-
-
-\subsubsection{Without rotation}
-
-If we remove $r_+, r_-$ from the moves set we obtain Tetris without rotation, were the player cannot rotate pieces. Since the orientation in the \emph{initial position} of a piece is always $\theta = 0^\circ$, we can fix this by adding the initial orientation of each piece in the Tetris game instance.
-
-\textbf{Input} (\textit{a Tetris game}): $\mathcal{G} = (B,(t_1,\theta_1, \dots,t_k,\theta_1))$ an initial board and a sequence of $k$ pieces types and its initial orientation.
-
-
-The rest of the game is exactly the same. The results are presented in Table~\ref{tab:tt} 
-
-\begin{table}[h!]
-\centering
-\label{tab:tt}
-\begin{tabular}{|c || c | c || c | c ||} 
- \hline
-  & \multicolumn{2}{| c ||}{\survival} & \multicolumn{2}{| c |}{\clearing} \\
- \hline
-  & with rotation & no rotation & with rotation & no rotation \\
- \hline               
- $k = 1$ & \pp  & \pp  & \pp  & \pp \\ 
- \hline                             
- $k = 2$ & Open & Open & Open & \npc \\
- \hline                             
- $k = 3$ & Open & \npc & \npc & \npc\\
- \hline                             
- $k = 4$ & \npc & \npc & \npc & \npc\\
- \hline                             
- $k > 5$ & \npc & \npc & \npc & \npc\\
- \hline
-\end{tabular}
-
-\caption{\cite{TT} results with rotation}
-\end{table}
-
-OPEN PROBLEMS?
-
-\subsection{Tetris is NP-hard even with O(1) rows or columns}
-
-Following the variants introduced in \cite{TT}, in \cite{TCB} new variations are introduced. In  a $(\leq)k$-\textsc{tris} game, the set of pieces types is all possible pieces of $\leq k$ cells. Then we define the following problems:
-
-\begin{itemize}
-  \item $c$-\textsc{Column} $(\leq)k$-\textsc{tris}: $(\leq)k$-\textsc{tris} where the board width is fixed to $c$.
-  \item $r$-\textsc{Row} $(\leq)k$-\textsc{tris}: $(\leq)k$-\textsc{tris} where the board height is fixed to $c$.
-\end{itemize}
-
-The rows and columns, respective, remain arbitrary. These two versions can be combined with the empty Tetris.
-
-\begin{itemize}
-  \item \textsc{Empty $(\leq)k$-\textsc{tris}}: $(\leq)k$-\textsc{tris} where all the board cells are initially unfilled.
-\end{itemize}
-
-Results with this variation are in Table~\ref{tab:tcb}
-
-\begin{table}[h!]
-\centering
-\label{tab:tcb}
-\begin{tabular}{|c | c | c | c | c |} 
- \hline
- Rows   & Columns & Empty  & Piece Sizes  & Complexity      \\
- \hline
- \hline
- $1   $ & $O(n) $ & no     & $O(n)    $ & strongly \nph   \\ \hline
- $1   $ & $O(n) $ & yes    & $O(n)    $ & linear          \\ \hline
- $1   $ & $O(n) $ & no     & $k       $ & linear          \\ \hline
- $2   $ & $O(n) $ & yes    & $O(n)    $ & strongly \nph   \\ \hline
- $3   $ & $O(n) $ & no     & $4       $ & Open            \\ \hline
- $4   $ & $O(n) $ & no     & $4       $ & strongly \nph   \\ \hline
- $O(n)$ & $1    $ & no     & $O(n)    $ & linear          \\ \hline
- $O(n)$ & $2    $ & no     & $O(n)    $ & polynomial      \\ \hline
- $O(n)$ & $3    $ & yes    & $O(n)    $ & strongly \nph   \\ \hline
- $O(n)$ & $3 - 7$ & no     & $4       $ & Open            \\ \hline
- $O(n)$ & $8+   $ & no     & $4       $ & strongly \nph   \\ \hline
- $O(n)$ & $8    $ & yes    & $\leq 65 $ & strongly \nph   \\
- \hline
-\end{tabular}
-\caption{\cite{TT} results table}
-\end{table}
-
-OPEN PROBLEMS?
-
-\subsection{Tetris with Few Piece Types}
-
-In \cite{TWFP} variations of the original problem with fewer pieces are introduced, we only use a subset of the 7 available pieces types of Tetris. 
-
-\textbf{Main Result:} for every 2-sized subset of $\{\ALL\}$, Tetris \survival and \clearing is \nph under SRS.
-
-SRS is a new reasonable rotation model, used in the demonstrations that allow more rotations. The possible piece states after a rotation are a superset of the rotation model used in the game definition.
-
-
-Two new movement variants are introduced:
-
-\begin{itemize}
-  \item \texttheo{Hard-Drop}: when playing the Tetris video game, specially in the initial rounds of a game, the player can hard drop a piece in order to avoid dropping the piece one row at a time. \emph{drop} and \emph{fix} are removed from the set of moves, and \emph{hard-drop} is added. Hard-dropping a piece moves it maximally downward before fixing into place.
-  \item \texttheo{20-G}:In this model, instead of periodically moving down one unit, all pieces move maximally down-ward instantly and on their own, and the player is not allowed to control how fast a piece moves downward. The player is still free to rotate or move the piece left or right before the piece locks. \emph{drop} move is removed, and the vertical position of the initial state of a piece is now the lowest possible.
-\end{itemize}
-
-\textbf{Result:} Tetris \texttheo{20-G} and Tetris \texttheo{Hard-Drop} is \npc  even if the pieces set is restricted to $\{ \II, \OO \}$ \cite{TWFP}. 
-
-
-\textbf{Result:} if we allow the piece $\{ \TT \}$, the above result can be extended to \nph.
-
-
-
-\section{Open Stuff}
-
-A list of open variations, no one has explored.
-
-\begin{itemize}
-  \item \textbf{Hold-Function:} in this version the player has a \emph{box} to put aside a piece for a later use.
-  \item \textbf{7-bag randomizer:} the pieces are presented to the player in sequences of 7 pieces. Each sequence must contain the 7 pieces (in the traditional version) in any order. 
-  \item \textbf{Empty:} Tetris with the initial board unfilled.
-\end{itemize}
-
-
-
-
-\section{Related problems}
-
-Other problems related to Tetris.
-
-\subsection{Tetris and decidability}
-
-In \cite{TAD}, they consider a variant of Tetris where the sequence of pieces (together with their orientation and horizontal position, which cannot be changed anymore) is generated by a finite state automaton. They show that it is undecidable, given such an automaton, and starting from an empty game board, whether one of the generated sequences leaves an empty game board.
-
-Since we are dealing with pieces sequences of a regular language we cannot fix the board height, so in this version the board height is unbounded. The formal problem definition is:
-
-\vspace{1em}
-\textbf{Instance:} an empty board $B$ of width $w$ and $L$, a regular language describing sequences of Tetris pieces with their initial position and orientation. 
-
-\textbf{Question:} is there a sequence in $L$ that leaves the game board empty after dropping all pieces into the empty board?
-\vspace{1em}
-
-This problem with a board of width of 10 is undecidable for sequences only of $\II$ (reduction from PCP), but with only $\OO$ pieces the problem is decidable.
-
-
-Introducing user intervention, letting the piece move while falling, we have the that the problem is decidable is the pieces types are restricted to $\{ \OO , \II \}$, or if the pieces are restricted to one piece type for arbitrary board width.
-
-\subsection{Tetris is not Competitive}
-
-Explores Tetris as an online game, where the player can only see the $l$-upcoming pieces (\emph{lock ahead}), in contrast with an offline game where the player knows completely the piece sequence.
-
-In online-offline game studies, the goal is to compare an optimum offline strategy with an offline one. In this paper they construct pieces sequences without any loss-avoiding strategies for players with arbitrary (finite) lock ahead, but a loss-avoiding strategy exists in the offline version.
-
-Next they use the before construction to show that an online player performs arbitrarily badly against an offline player for some optimization goals.
-
-\subsection{How to construct Tetris configurations}
-
-The main result of \cite{HTCT} is that every reasonable Tetris configuration is constructible, if a simple parity condition on the configuration is met.
-
-To this problem we can attach a decision problem: given a configuration and an ordered series of Tetris pieces, their sizes satisfying a suitable congruence modulo 4; is it possible to construct the configuration using this series? 
-
-We can also try to minimize the number of pieces needed to build a Tetris configuration.
-
-\subsection{How Fast Can We Play Tetris Greedily With Rectangular Pieces?}
-
-\cite{TWRP} considers a Tetris variant with a board of width $w$ a and an infinite height, where the pieces are rectangles of arbitrary integer dimensions and rotations are not allowed. The model definition is:
-
-\begin{definition}[RDDS]
-  A \emph{Rectangle Dropping Data Structure} maintains a set of $O(n)$ independent axis-aligned rectangles in the plane with integer coordinates, lying on or above the $x$-axis and between the vertical lines $x = 0$ and $x = w$, and allows the following:
-
-  \begin{itemize}
-    \item \emph{Preprocessing:} Initialize an empty RDDS containing no rectangle.
-    \item \emph{Update:} Given an axis-aligned rectangle $R$ and a non-negative integer $x_d$, drop $R$ with left border at $x$-coordinate $x_d$ (here we assume that $R$ and $x_d$ are such that $R$ will lie between the lines $x = 0$ and $x = w$).
-    \item \emph{Query:} Given an axis-aligned rectangle $R$, return the position where $R$ must be dropped to end up as low as possible (or one such position if it is not unique) as well as the height of the highest point in the set of rectangles which would result from that move.
-  \end{itemize}
-\end{definition}
-
-RDDS is assumed to be a \emph{world-RAM machine}, an abstract machine similar to a random-access machine, but with finite memory and word-length. It works with words of size up to $ w $ bits, meaning it can store integers up to $2^{w} - 1$. 
-The model is useful for analyzing the complexity of algorithms in a more realistic context, where the execution time not only depends on the amount of data but also on the representation of that data and the operations performed on it. 
-
-They show that on a board with width $w = O(n)$, both operations of RDDS  cannot be supported in time $O(n^{1 / 2 - \epsilon})$ simultaneously if OMv (online matrix-vector multiplication problem) conjecture is true. 
-
-
-\subsection{Why Most Decisions Are Easy in Tetris?}
-
-Aquest mel vull llegir. Diu que el tetris no es especial.
