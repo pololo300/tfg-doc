@@ -6,7 +6,7 @@
 %\usepackage{array}
 \usepackage{enumerate}
 %\usepackage{xypic}
-%\usepackage[dvips]{graphics}
+\usepackage[dvips]{graphics}
 %\usepackage{moreverb}
 \usepackage{multicol}
 \usepackage{hyperref}
@@ -70,6 +70,8 @@
 \newcommand{\ZZ}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{pieces/pieces_Z.pdf}}}\,}Z}
 \newcommand{\II}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{pieces/pieces_I.pdf}}}\,}I}
 \newcommand{\ALL}{\II, \allowbreak \OO, \allowbreak \TT, \allowbreak \SS, \allowbreak \ZZ, \allowbreak \JJ, \allowbreak \LL}
+\newcommand{\VD}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{./pictures/dominoes/v-domino.pdf}}}\,}i}
+
 
 \NewDocumentCommand{\cell}{O{i} O{j}}{
  \langle #1, #2 \rangle
@@ -221,7 +223,12 @@
 \include{./definicions.tex}
 \include{./variacions.tex}
 \include{./results}
+
+\include{./dominoes.tex}
+
 \include{./related_problems.tex}
+
+
 
 \bibliographystyle{plain}
 \bibliography{references} 
