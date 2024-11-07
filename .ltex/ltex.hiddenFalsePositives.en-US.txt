@@ -4,3 +4,6 @@
 {"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qp-placed-pices: in the game \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, does \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q place at least \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q pieces before losing.\\E$"}
 {"rule":"REP_PASSIVE_VOICE","sentence":"^\\QIn \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q a piece variation is introduced.\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QThe main result is that every reasonable Tetris configuration is constructible, if a simple parity condition on the configuration is met.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qthe move \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q over \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q is a legal move for all \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q and \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q is fixed.\\E$"}
+{"rule":"UNLIKELY_OPENING_PUNCTUATION","sentence":"^\\Q: in the game \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, does \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q leave every cell of the board unfilled?\\E$"}
+{"rule":"UNLIKELY_OPENING_PUNCTUATION","sentence":"^\\Q: is equivalent to n-height-filled, where \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q is the height of board \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}

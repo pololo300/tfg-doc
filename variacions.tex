@@ -1,8 +1,8 @@
 \section{Game variations}
 
-\textsc{Tetris}'s inputs are the board and the sequence of pieces, but to define the problem all other parameters need to be specified. To define a game we need to provide: the possible board dimensions, polyominoes that will appear in the game, the available moves and the initial state function.
+\textsc{Tetris}'s inputs are the board and the sequence of pieces, but to define the problem all other parameters need to be specified. To define a game we need to provide: the polyominos that will appear in the game, the available moves and the initial state function.
 
-In order to present all variations we will first define the basic Tetris, the problem presented in \cite{TIH}. Then a Tetris variation is the basic Tetris problem, but with some changes on the parameters. Two variations can be combined to produce a new one. Variations are grouped by the parameters they change of the definition.
+In order to present all variations we will first define the basic Tetris, the problem presented in \cite{TIH}. Then a Tetris variation is the basic Tetris problem, but with some changes on the parameters. Two variations can be combined to produce a new one. Variations are grouped by the parameters they tweak.
 
 We are introducing also some notation to define different Tetris games. 
 
@@ -10,9 +10,9 @@ We are introducing also some notation to define different Tetris games.
 
 The problem is:
 
-$$\textsc{Tetris}\left[ \mathbb{N} \times \mathbb{N},T_4,\varphi_0, \{s_l,s_r, r_+, r_-, d, f \},\Phi \right]$$
+$$\textsc{Tetris}\left[T_4,\varphi_0, \{s_l,s_r, r_+, r_-, d, f \},\Phi \right]$$
 
-Let's break down the definition into parts. $\mathbb{N} \times \mathbb{N}$ indicates that the problem instances contain boards of arbitrary dimensions. $T_4$ indicates that all the instances use the classic set of pieces, the ones made up by joining 4 blocks. $\varphi_0$ is the initial state function that places the pieces in the top-middle of the board. The available moves in each match are: slide to the left, slide to de right, rotate clockwise, rotate counterclockwise, drop by one row and fix a piece. 
+Let's break down the definition into parts. $T_4$ indicates that all the instances use the classic set of pieces, the ones made up by joining 4 blocks. $\varphi_0$ is the initial state function that places the pieces in the top-middle of the board. The available moves in each match are: slide to the left, slide to de right, rotate clockwise, rotate counterclockwise, drop by one row and fix a piece. 
 
 For the objective function $\Phi$, \clearing or \survival will be both considered.
 
@@ -33,7 +33,7 @@ The first changes the classic $T_4$ polyominoes by $T_k$, the set that contains 
 
 $$\textsc{Tetris}[\{ \TT, \OO \}] := \textsc{Tetris}[T = \{ \TT, \OO \}]$$
 
-abusing the notation. The above problem is the basic Tetris restricting the tetrominoes to the two indicated pieces.
+abusing the notation. The above problem is the basic Tetris restricting the tetrominos to the two indicated pieces.
 
 
 \subsection{Board Variations}
@@ -42,8 +42,8 @@ With boards, restricting the set of board dimensions, new variations appear.
 
 \begin{itemize}
 
-  \item $c\textsc{-column-Tetris} := \textsc{Tetris}[D = \mathbb{N} \times \{c\}]$
-  \item $r\textsc{-row-Tetris} := \textsc{Tetris}[D = \{r\} \times \mathbb{N} ]$
+  \item $c\textsc{-column-Tetris} := \textsc{Tetris}$ where all input boards have $c$ columns.
+  \item $r\textsc{-row-Tetris} := \textsc{Tetris}$ where all input boards have $r$ rows.
 \end{itemize}
 
 In this case $c$\textsc{-column-Tetris} and $r$\textsc{-row-Tetris} instances are a subset of basic Tetris instances, only admitting instances where the board width, respectively the height, is $c$, respectively $r$.

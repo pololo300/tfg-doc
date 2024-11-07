@@ -3,17 +3,11 @@
 \usepackage{amscd}
 \usepackage{amsthm}
 \usepackage{amssymb}
-%\usepackage{array}
 \usepackage{enumerate}
-%\usepackage{xypic}
 \usepackage[dvips]{graphics}
-%\usepackage{moreverb}
 \usepackage{multicol}
 \usepackage{hyperref}
 \usepackage[english]{babel}
-%\usepackage{epsfig}
-%\usepackage{rotating}
-%\usepackage[all]{xy}
 \usepackage{color}
 \usepackage{tikz}
 \usepackage{tabls} %per tenir m{\'e}s control sobre l'espai en les taules nom{\'e}s cal aquest paquet
@@ -22,7 +16,6 @@
 \makeindex
 
 \usepackage[T1]{fontenc}
-% \usepackage[sc]{mathpazo}
 \linespread{1.1} % Palatino needs more leading (space between lines)
 
 \usepackage[latin1]{inputenc}
@@ -62,15 +55,33 @@
 \newcommand{\conjref}[1]{Conjecture~\ref{#1}}
 
 
-\newcommand{\OO}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{pieces/pieces_O.pdf}}}\,}O}
-\newcommand{\TT}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{pieces/pieces_T.pdf}}}\,}T}
-\newcommand{\LL}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{pieces/pieces_L.pdf}}}\,}L}
-\newcommand{\JJ}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{pieces/pieces_J.pdf}}}\,}J}
-\renewcommand{\SS}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{pieces/pieces_S.pdf}}}\,}S}
-\newcommand{\ZZ}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{pieces/pieces_Z.pdf}}}\,}Z}
-\newcommand{\II}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{pieces/pieces_I.pdf}}}\,}I}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% local definitions for this paper
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% monomio
+\newcommand{\mono}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.15]{./pictures/monomio/monomio.pdf}}}\,}.}
+
+% dominoes
+\newcommand{\VD}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.15]{./pictures/dominoes/v-domino.pdf}}}\,}i}
+\newcommand{\HD}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.15]{./pictures/dominoes/h-domino.pdf}}}\,}i}
+
+% triminoes
+\newcommand{\Itri}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.15]{./pictures/trimonios/I3.pdf}}}\,}I}
+\newcommand{\Ltri}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.15]{./pictures/trimonios/L3.pdf}}}\,}L}
+
+
+% tetrominoes
+\newcommand{\OO}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.15]{pictures/tetrominos/O.pdf}}}\,}O}
+\newcommand{\TT}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.15]{pictures/tetrominos/T.pdf}}}\,}T}
+\newcommand{\LL}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.15]{pictures/tetrominos/L_90.pdf}}}\,}L}
+\newcommand{\LLvert}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.15]{pictures/tetrominos/L.pdf}}}\,}L}
+\newcommand{\JJ}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.15]{pictures/tetrominos/J_90.pdf}}}\,}J}
+\renewcommand{\SS}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.15]{pictures/tetrominos/S.pdf}}}\,}S}
+\newcommand{\ZZ}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.15]{pictures/tetrominos/Z.pdf}}}\,}Z}
+\newcommand{\II}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.15]{pictures/tetrominos/I_90.pdf}}}\,}I}
+
 \newcommand{\ALL}{\II, \allowbreak \OO, \allowbreak \TT, \allowbreak \SS, \allowbreak \ZZ, \allowbreak \JJ, \allowbreak \LL}
-\newcommand{\VD}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.2]{./pictures/dominoes/v-domino.pdf}}}\,}i}
 
 
 \NewDocumentCommand{\cell}{O{i} O{j}}{
@@ -80,43 +91,16 @@
  (#1, \allowbreak #2, \allowbreak \langle #3, \allowbreak #4 \rangle,  \allowbreak #5 )
 }
 
-
 \newcommand{\texttheo}[1]{\textnormal{\textsf{#1}}}
 \newcommand{\tetris}[1]{\textsc{Tetris}[#1]\xspace}
 \newcommand{\npc}{\textnormal{\textsf{NP-complete} }}
 \newcommand{\pp}{\textnormal{\textsf{P}}}
 \newcommand{\nph}{\textnormal{\textsf{NP-hard} }}
-\newcommand{\survival}{\texttheo{survival }}
-\newcommand{\clearing}{\texttheo{clearing }}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% environments per la intro i pel resum en catal{\`a} %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%intro
+\newcommand{\survival}{$\texttheo{survival}$}
+\newcommand{\clearing}{$\texttheo{clearing}$}
 
 
-\newtheorem{th1}{Theorem}
-\newtheorem{prop1}[th1]{Proposition}
-\newtheorem{cor1}[th1]{Corollary}
-\newtheorem{lem1}[th1]{Lemma}
-\newtheorem{de1}[th1]{Definition}
-%catala
-
-\newtheorem{th2}{Teorema}
-\newtheorem{prop2}[th2]{Proposici{\'o}}
-\newtheorem{cor2}[th2]{Corol{\cdot}lari}
-\newtheorem{lem2}[th2]{Lema}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% local definitions for this paper
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%% aix{\`o} pels headings %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% aixo pels headings %%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
@@ -197,14 +181,6 @@
  \DeclareMathOperator{\h}{h}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
