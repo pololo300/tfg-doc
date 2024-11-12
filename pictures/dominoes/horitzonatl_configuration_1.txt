@@ -1,0 +1,5 @@
+
+ cc
+  CC    CC
+CCcc    cc
+ccCCcc  CC
