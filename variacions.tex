@@ -14,7 +14,7 @@ $$\textsc{Tetris}\left[T_4,\varphi_0, \{s_l,s_r, r_+, r_-, d, f \},\Phi \right]$
 
 Let's break down the definition into parts. $T_4$ indicates that all the instances use the classic set of pieces, the ones made up by joining 4 blocks. $\varphi_0$ is the initial state function that places the pieces in the top-middle of the board. The available moves in each match are: slide to the left, slide to de right, rotate clockwise, rotate counterclockwise, drop by one row and fix a piece. 
 
-For the objective function $\Phi$, \clearing or \survival will be both considered.
+For the objective function $\Phi$, \clearing\ or \survival\ will be both considered.
 
 
 \subsection{Pieces Variations}
@@ -29,7 +29,7 @@ These variations change the set of polyominoes $T$ of the problem.
 
 \end{itemize}
 
-The first changes the classic $T_4$ polyominoes by $T_k$, the set that contains all the $k$-ominoes. The second one uses all the $q$-ominoes up to $k$. We can also consider variation with some specific pieces. For example, in \cite{TWFP}, the variation \emph{"Tetris with fewer pieces types"} uses subsets of $T_4$. We can write:
+The first changes the classic $T_4$ polyominoes by $T_k$, the set that contains all the $k$-ominoes. The second one uses all the $q$-ominoes up to $k$. We can also consider variation with some specific pieces. For example, in \cite{TWFP}, the variation uses subsets of $T_4$. We can write:
 
 $$\textsc{Tetris}[\{ \TT, \OO \}] := \textsc{Tetris}[T = \{ \TT, \OO \}]$$
 
@@ -58,6 +58,7 @@ Move variations cover a wither range of different games, making it more difficul
 
 As the name indicates, in the matches of this problem the player cannot rotate the pieces. The following variations are motivated by the video game.
 
+\vspace{10px}
 
 When playing Tetris, specially in the initial rounds of a game, the player can hard drop a piece in order to avoid dropping the piece one row at a time. \emph{drop} and \emph{fix} are removed from the set of moves, and \emph{hard-drop} is added. Hard-dropping a piece moves it maximally downward before fixing into place. 
 

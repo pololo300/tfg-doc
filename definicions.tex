@@ -1,10 +1,8 @@
 \section{Game Definitions}
 
-In \cite{TIH} we can find a formalization of the Tetris game and a decisional/functional problem associated to it. Since the video game is played in finite board and a player can't win, the definition of the game introduces some variations to build a decisional problem.
+In \cite{TIH} we can find a formalization of the Tetris game and a decisional/functional problem associated to it. In \cite{TT,TWFP,TCB,CTV,AVG} game variations and new problems are introduced. In this section we will define a generalized Tetris game definition, following \cite{TIH}, which aims to include all possible game variations and the combination of these. 
 
-In \cite{TT,TWFP,TCB,CTV,AVG} game variations are introduced without any formalization of the new emerging problems. We are going to provide a generalized Tetris game definition, following \cite{TIH}, which aims to include all possible game variations and the combination of these. 
-
-A \emph{game} will refer to the hole game with its rules, configurations, pieces, ... and a \emph{match} will refer to a concrete Tetris game instance (the sequence of moves that a player would play). 
+A \emph{game} will refer to the hole game with its rules, configurations, pieces, ... and a \emph{match} will refer to a concrete Tetris game instance (the sequence of moves that a player would play). We first define the board.
 
 \begin{definition} \index{board}
   A \emph{board} \emph{B} is an $n$ by $m$ grid. Each cell $\cell$, $i = 1\dots n$, $j = 1\dots m$ is \emph{filled} or \emph{unfilled}.
@@ -12,8 +10,7 @@ A \emph{game} will refer to the hole game with its rules, configurations, pieces
 
 The board will be indexed from bottom to top and from left to right. The cell $\cell[1][1]$ is in the bottom left of the board and $\cell[n][m]$ is the top right-most cell.
 
-In some results, the authors assume that the initial configuration must be constructible with the pieces and the rules of the game. This is that the initial configuration can be reached, with the game rules, from an empty board and with the appropriate pieces sequence. In other results, the only condition established over the initial configuration is that it can't have filled rows. We will do not assume the initial configuration must be constructible.
-
+In some results, the authors assume that the initial configuration must be \emph{constructible} \index{constructible} with the pieces and the rules of the game. This means that the initial configuration can be reached, with the game rules, from an empty board and with the appropriate pieces sequence. In other results, the only condition established over the initial configuration is that it can't have filled rows. For the moment we will not say anything about it, will be specified when necessary.
 \vspace{10px}
 
 Tetris classical pieces are made up by attaching 4 squares. Using the definition form \cite{TT, WikiFandom} we generalize the piece definition.
@@ -31,7 +28,7 @@ For $k= 1,2,3,4,5, \dots$ the $k$-omino pieces are called respectively: \emph{mo
   $T_k$ is set of polyominos containing all the possible $k$-ominoes and nothing else.
 \end{definition}
 
-\begin{example} The original video game uses the piece types $T_4 = \{ \ALL \}$, all the tetrominos, the monomios $T_1 = \{\mono \}$, the dominos $T_2 = \{\VD \}$, the trimonios $T_3 = \{\Ltri, \Itri \}$ ...
+\begin{example} The original video game uses the piece types $T_4 = \{ \ALL \}$, all the tetrominos. For other values of $k$: the monomio(s) $T_1 = \{\mono \}$, the domino(s) $T_2 = \{\VD \}$, the trimonios $T_3 = \{\Ltri, \Itri \}$ ...
 \end{example}
 
 The following definition will be used to define the trajectory of a polyomino thought the board.
@@ -51,13 +48,11 @@ The following definition will be used to define the trajectory of a polyomino th
 
 In order to let the player place each piece in any column when the top row is partially filled, the cell position of a piece state can be initially above the board, $\cell$ for $j > n$.
 
-In the most common versions of Tetris a polyomino is given to the player by placing it in the top-middle of the board, but others don't. For example in a variation called \texttheo{20-G}, the polyomino is placed at the top-middle of the board, moved downwards until it touches another piece and the given to another player. In order to include all variations in the formalization, the initial position will be a computable function.
+In the most common versions of Tetris a polyomino is given to the player by placing it in the top-middle of the board, but others don't. For example in a variation called \texttheo{20-G}, the polyomino is first placed at the top-middle of the board, then moved downwards until it touches another piece and finally given to another player in the left position. In order to include all variations in the formalization, the initial position will be a computable function.
 
 \begin{definition} \index{initial state}
   An \emph{initial state} is a computable function $\varphi$ that given a board $B$ and a polyomino $t$, outputs an unfixed piece state $$\varphi(B,t) = P_0 = \piece[t][\theta][i][j][\text{unfixed}].$$
 \end{definition}
-
-% NOTE: aqui hauries de fer que caigues de mes amunt per permetre moure la peça lliurement, que no començes a dintre el taulell
 
 \begin{example} The initial state function that puts the piece at the top middle of the board without rotation is:
 $$\varphi_0(B,t) = \piece[t][0^\circ][n + h][\lfloor m / 2 \rfloor][\text{unfixed}]$$
@@ -92,14 +87,14 @@ Some variations consist on changing the set of  moves available in a match, so w
   \item $d$ a \emph{drop by one row:} if all the board cells bellow the piece are not occupied the output is:
     $$d (B, \piece[t][\theta][i][j][\text{unfixed}]) = \piece[t][\theta][i-1][j][\text{unfixed}]$$
 
-  \item $f$ a \emph{fix:} if any of the board cells bellow the piece is occupied, the output is:
+  \item $f$ a \emph{fix:} if the piece position is inside the board and any of the board cells bellow the piece is occupied, the output is:
     $$f (B, \piece[t][\theta][i][j][\text{unfixed}]) = \piece[t][\theta][i][j][\text{fixed}]$$
 
   \item $hd$ a \emph{hard drop:} the piece is moved maximally downwards and fixed.
     
 \end{itemize}
 
-All the conditions can be computed in $\mathcal{O}(1)$, because only a constant numbers of cells are need to be visited every time.  
+Most of the conditions can be computed in $\mathcal{O}(1)$  because only a constant numbers of cells are need to be visited every time. The \emph{hard drop} can be computed in $\mathcal{O}(n)$.
 
 \vspace{10px}
 
@@ -110,7 +105,7 @@ The above definitions are quite ambiguous, and different game variations take di
 Let's now define the \emph{trajectory} of a piece type in a Tetris game. Intuitively the trajectory starts when the piece is given to the player, continues with a sequence of legal moves and ends when the piece is fixed. 
 
 \begin{definition} \index{trajectory}
-  Let $B$ be a board, $t$ a polyomino and $\varphi$ an initial state. Let $P_0 = \varphi(B,t)$ be the initial state of the polyomino $t$. Then a sequence of $k$ moves $\sigma = (\tau_1, ..., \tau_k)$ is a \emph{trajectory} for $t$ if:
+  Let $B$ be a board, $t$ a polyomino and $\varphi$ an initial state function. Let $P_0 = \varphi(B,t)$ be the initial state of the polyomino $t$. Then a sequence of $k$ moves $\sigma = (\tau_1, ..., \tau_k)$ is a \emph{trajectory} for $t$ if:
 
  \begin{itemize}
    \item the move $\tau_{i}$ over $P_{i-1}$ is a legal move for all $i = 1 \dots k$
@@ -141,7 +136,7 @@ The order in which rows are cleared doesn't matter because the resulting board i
 
 \begin{definition} \index{match} \index{loss}
   Given a board $B$ and a sequence of $k$ polyominos $P = (t_1,\dots,t_k)$ a \emph{match} $\Sigma$ is a sequence
-  $$ B = B_0, \sigma_1, B_1, \sigma_2, B_2, \dots  \sigma_q, B_q, \; \; q \leq k$$ 
+  $$ \Sigma = B_0, \sigma_1, B_1, \sigma_2, B_2, \dots  \sigma_q, B_q, \; \; q \leq k$$ 
   where:
   \begin{itemize}
     \item $\sigma_i$ is a trajectory of the piece type $t_i$ in the board $B_{i-1}$.
@@ -150,7 +145,7 @@ The order in which rows are cleared doesn't matter because the resulting board i
   \end{itemize}
 \end{definition}
 
-The third condition, $q < k$ happens when the player cannot apply any move to the piece, because any precondition is satisfied (this would typically happen when the board is almost filled and there's no way to fix a piece inside the board).
+The third condition, $q < k$ happens when the player cannot apply any move to the piece, because no precondition is satisfied (this would typically happen when the board is almost filled and there's no way to fix a piece inside the board).
 
 \section{Problem}
 
@@ -166,7 +161,7 @@ The \textsc{Tetris} problem and its variants share the following parametrized fo
     the problem $\textsc{Tetris}[T,\varphi,M,\Phi]$ is as follows:
   
   \begin{itemize}
-    \item \textbf{Input}: $\mathcal{G} = (B,(t_1,\dots,t_k))$ an initial $n\times m$ board $B$ and a sequence of $k$ polyominos, where $t_i \in T$ for $i = 1,\dots,k$.
+    \item \textbf{Input}: $\mathcal{G} = (B,(t_1,\dots,t_k))$: an initial $n\times m$ board $B$ with an initial configuration and a sequence of $k$ polyominos, where $t_i \in T$ for $i = 1,\dots,k$.
     
     \item \textbf{Output} : Does exist a match $\Sigma$, with initial function $\varphi$ and moves $M$, such that $\Phi ( \mathcal{G}, \Sigma )$ holds? 
   \end{itemize}
@@ -174,7 +169,7 @@ The \textsc{Tetris} problem and its variants share the following parametrized fo
 
 \end{definition}
 
-Where the objective function $\Phi$ is computable and \emph{acyclic} over all matches $\mathcal{G}$. $\Phi$ is acyclic over all matches if for every match $\Sigma$ such that $\Phi(\mathcal{G}, \Sigma)$ holds, then another match $\Sigma'$ exists, such that  $\Phi(\mathcal{G},\Sigma')$ holds and there are not repeated pieces states in $\Sigma'$. The following are objective functions:
+The objective function $\Phi$ is computable and \emph{acyclic} over all matches $\mathcal{G}$. $\Phi$ is acyclic over all matches if for every match $\Sigma$ such that $\Phi(\mathcal{G}, \Sigma)$ holds, then another match $\Sigma'$ exists, such that  $\Phi(\mathcal{G},\Sigma')$ holds and there are not repeated pieces states in $\Sigma'$. The following are objective functions:
 
 \begin{itemize}
   \item \texttheo{k-cleared-rows}: in the game $\mathcal{G}$, does $\sigma$ clear at least $k$ rows?

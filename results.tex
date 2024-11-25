@@ -1,13 +1,15 @@
 \section{Results}
 
-In this section we resume the most relevant results, grouped by the paper in wich they appear. They are sorted by publication date. 
+With the problem and its variants presented, we present now the most relevant work around Tetris complexity. 
+\textbf{COMENTAR CADA PROBLEMA ENFOCANT A "TROBAR LO QUE FA EL TETRIS COMPLICAT"}
+
+In this section we resume the most relevant results, grouped by the paper in which they appear. They are sorted by publication date. 
 
 \subsection{Tetris is hard, even to approximate}
 
-The first results about Tetris complexity appear in \cite{TIH}. The results are the following:
-
+The first results about Tetris complexity appear in \cite{TIH}. This result is about the corresponding of the decisional problems. For example the answer to \texttheo{height-filled} is the minimum $h$ such that $\texttheo{h-height-filled}$ holds.
 \begin{theorem}
-  Tetris is \nph to optimize (or approximate) with the objectives, \texttheo{k-cleared-rows}, \texttheo{k-tetrises} \texttheo{h-height-filled} and \texttheo{p-placed-pices}. It remains \nph even if:
+  Tetris is \nph to optimize (or approximate) with the objectives, \texttheo{cleared-rows}, \texttheo{tetrises} \texttheo{height-filled} and \texteheo{placed-pices}. It remains \nph even if:
   \begin{itemize}
     \item The player is restricted to two rotation/translation moves before each piece drops in height.
     \item Pieces are restricted to $\{\LL, \SS, \II, \OO\}$ or $\{\LL, \ZZ, \II, \OO\}$ plus at least one other piece.
@@ -18,7 +20,7 @@ The first results about Tetris complexity appear in \cite{TIH}. The results are 
 
 \subsection{Total Tetris: Tetris with Monominoes, Dominoes, Trominoes, Pentominoes, ...}
 
-In \cite{TT} a piece variation are explored. For $k \geq 1$ problems, k\textsc{-tris} and \textsc{NoRotation-}k\textsc{-tris}, with \survival and \clearing are all almost solved. Results are presented in Table~\ref{tab:tt}.
+In \cite{TT} a piece variation are explored. For $k \geq 1$ problems, k\textsc{-tris} and \textsc{NoRotation-}k\textsc{-tris}, with \survival\ and \clearing\ are all almost solved. For the basic problem, changing the polyominos set by increasing $k$ adds complexity to the polyminoes and increases the set size. Intuitively we can see that adding complex pieces to a game makes it more complicated. Results are presented in Table~\ref{tab:tt}.
 
 \begin{table}[h!]
 \centering
@@ -46,9 +48,7 @@ In \cite{TT} a piece variation are explored. For $k \geq 1$ problems, k\textsc{-
 
 \subsection{Tetris is NP-hard even with O(1) rows or columns}
 
-In \cite{TCB} board variations are explored, they use the \emph{partial lock out rule}.
-
-\textbf{NOTA:} es podria afegir a la defincio del poblema algo (per exemple un lleguntage regular) per restringir el cojunt de configuracions inicials del taulell. No ho he posat perque me sembla que ja sobrecarregaria la definicio. Queda pendent parlar-ho. També passa el mateix amb restriccions sobre la sequecia de peces, es podria demanar un llenguatge regular que definis la sequencia.
+In \cite{TCB} board variations are explored. These results help us get more intuition of Tetris complexity. Fixing the board size of the \textsc{Tetris} problem, in order to add complexity to the problem \textbf{TO FINISH:}.
 
 \begin{itemize}
   \item \textsc{Empty $(\leq)k$-\textsc{tris}}: $(\leq)k$-\textsc{tris} where all the board cells are initially unfilled.
@@ -87,7 +87,7 @@ In \cite{TWFP} they treat variations with fewer pieces, they only use a subset o
 
 \vspace{10px}
 
-\textbf{Main Result:} for every 2-sized subset of $\{\ALL\}$, Tetris \survival and \clearing is \nph under SRS.
+\textbf{Main Result:} for every 2-sized subset of $\{\ALL\}$, Tetris \survival\ and \clearing\ is \nph under SRS.
 
 \vspace{10px}
 \texttheo{20-G} and \texttheo{Hard-Drop} movement variations are introduced, and some results provided.
