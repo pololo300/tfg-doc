@@ -200,9 +200,9 @@ Horizontal dominoes fit naturally in a row, so maximizing the number of dominoes
 
 To maximize the number of dominoes in the board, each row's holes must be filled as completely as possible. This reduces the problem of filling the entire board to the simpler task of optimally filling individual row holes. By systematically filling holes from the bottom-most row upwards, we ensure the greatest number of dominoes are placed without causing unresolvable blocking.
 
-Let \(h = \{\cell[r][j_1], \cell[r][j_1+1], \dots, \cell[r][j_2]\}\) be a hole in row $r$ from column $j_i$ to $j_2$, where all cells in \( h \) are empty, and the boundary cells \( \cell[r][j_1-1] \) and \( \cell[r][j_2+1] \) are either filled or lie outside the board. There must be a trajectory for a domino from the top of the board to $h$ in order to place a piece inside the hole, so we only consider the reachable holes.
+Let \( h = \{\cell[r][j_1], \cell[r][j_1+1], \dots, \cell[r][j_2]\} \) represent a hole in row \( r \) spanning columns \( j_1 \) to \( j_2 \). All cells in \( h \) are empty, and the boundary cells \( \cell[r][j_1-1] \) and \( \cell[r][j_2+1] \) are either filled or lie outside the board. To place a domino inside the hole, there must exist a trajectory from the top of the board to \( h \), making only reachable holes relevant for consideration.
 
-If two trajectories reach the same hole, all the cells between them can't be filled because this would imply the existence of completely floating cells. Figure~\ref{dom:hole-paths} shows an example. If a cell of the hole $\cell[r][j] \in h$ is below a filled cell $\cell[r+1][j]$ then $j = j_1$ or $j = j_2$ due to the previous lemma. So a hole has one of the shapes in Figure~\ref{dom:holes}
+If two trajectories reach the same hole, all cells between them cannot be filled, as this would imply the existence of entirely floating cells. Figure~\ref{dom:hole-paths} illustrates this scenario. Furthermore, if a cell \( \cell[r][j] \in h \) lies directly below a filled cell \( \cell[r+1][j] \), then \( j = j_1 \) or \( j = j_2 \), as implied by the previous lemma. Consequently, a hole must take one of the shapes shown in Figure~\ref{dom:holes}.
 
 \begin{figure}[h]
     \centering
@@ -235,59 +235,58 @@ If two trajectories reach the same hole, all the cells between them can't be fil
   \label{dom:holes}
 \end{figure}
 
-Let $l = j_2 - j_1 + 1$ the hole $h$ length. The maximin number of dominos that can be placed in  \ref{dom:hole-a} and \ref{dom:hole-c} is $h / 2$, filling completely the block if the hole lengh is even. For hole \ref{dom:hole-b} the same happens except for $l= 4$, where we can only place one domine, see Figure~\ref{dom:hole-4}.
+Let \( l = j_2 - j_1 + 1 \) denote the length of the hole \( h \). The maximum number of dominoes that can be placed in holes of type \ref{dom:hole-a} and \ref{dom:hole-c} is \( \lfloor l / 2 \rfloor \), completely filling the hole if \( l \) is even. For a hole of type \ref{dom:hole-b}, the same rule applies, except when \( l = 4 \), where only one domino can be placed, as shown in Figure~\ref{dom:hole-4}.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.18\textwidth]{./pictures/dominoes/hole-4.pdf}
-    \caption{A \ref{dom:hole-b} of length 4.}
+    \caption{A type-\ref{dom:hole-b} hole of length 4.}
     \label{dom:hole-4} 
 \end{figure}
 
 Finally, the algorithm to decide the problem would look like:
-\begin{algorithm}
-\caption{}\label{euclid}
 \begin{algorithmic}[1]
-\Function{Tetris-NoRotation[$\HD$]}{$B,k$} \Comment{a board $B$ and $k$ dominos}
-\State $k_{\max}\gets 0$
+    \Function{Tetris-NoRotation[$\HD$]}{$B,k$} \Comment{a board $B$ and $k$ dominos}
+    \State $k_{\max}\gets 0$ \Comment{tracks if each hole of a row is fully filled}
 
-\For{row $r = 1, \dots, n$}
-\State $\text{full} \gets \text{True}$
-  \For{hole $h$ in $r$}
-    \If{}
-      \State $\text{full} \gets \text{False}$
+    \For{row $r = 1, \dots, n$}
+    \State $\text{full} \gets \text{True}$
+      \For{hole $h$ in $r$}
+        \State $k = \text{MaxDominoes}(h)$ \Comment{the $k$ dominoes that can be maximally placed in $h$}
+        \If{$2 \cdot k_r \neq \text{length}(h)$}
+          \State $\text{full} \gets \text{False}$
+        \EndIf
+        \State $k_{\max} = k_{\max} + k$
+      \EndFor
+
+      \If{ $\text{full}$}
+        \State \textbf{return} $\text{True}$ \Comment{surviving indefinitely}
     \EndIf
-      
-    \State $k_{\max} = k + l$
-  \EndFor
-
-  \If{ $\text{full}$}
-    \State \return $\text{True}$
-  \EndIf
 \EndFor
 
 \State \textbf{return} $k \leq k_{\max}$
 \EndFunction
 \end{algorithmic}
-\end{algorithm}
+
+The cost of the algorithm is $\mathcal{O}(n \cdot m)$, since looping thorught the holes has cost $\mathcal{O}(m)$ and filling the hole maximally has constant cost if the hole shape is known.
 
 \end{proof}
 
 
 \subsection{Tetris Survival Without Rotation}
 
-The problem  $\textsc{Tetris-NoRotation}\lbrack \VD \rbrack $ \survival\ can be formulated as: \emph{given an arbitrary sized board with an initial configuration and a sequence of $k$ dominoes, is there any way to play all the pieces while avoid losing?}. As is pointed in \cite{TT}, if there's a way to clear a single row then we can survive indefinitely with the following piece placing strategy: 
+The problem $\textsc{Tetris-NoRotation}\lbrack \VD \rbrack $ \survival\ can be formulated as follows: \emph{Given an arbitrarily sized board with an initial configuration and a sequence of \( k \) dominoes, is there a way to play all the pieces while avoiding losing?} As pointed out in \cite{TT}, if there exists a strategy to clear a single row, it is possible to survive indefinitely by employing the following piece-placement strategy:
 
 \begin{enumerate}
     \item Rotate the piece to be vertical. 
     \item Place the piece in any column with the two top cells empty.
 \end{enumerate}
 
-So to solve the problem we must show that, when the top row isn't empty, deciding if any row can be cleared is in \pp. 
+To solve the problem, we must demonstrate that, when the top row is not empty, deciding whether any row can be cleared is in \pp. 
 
 \vspace{10px}
 
-Before anything else we first define how dominoes a piece state is mapped into the board and how pieces move. A domino state $\piece[\VD][\theta][i][j][f]$ is mapped into: 
+Before proceeding further, we first define how domino piece states are mapped onto the board and how the pieces move. A domino state \( \piece[\VD][\theta][i][j][f] \) is mapped into:
 
 \begin{center}
 \begin{equation}
@@ -300,21 +299,23 @@ Before anything else we first define how dominoes a piece state is mapped into t
 \end{equation}
 \end{center}
 
-It works like a clock. The piece position is the center and the second cell works as the clock handle. Figure~\ref{dom:mapping} shows the mapping for all orientations.
+The mapping works like a clock: the piece's position serves as the center, and the second cell acts as the clock's handle. Figure~\ref{dom:mapping} illustrates the mapping for all orientations.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.6\textwidth]{./pictures/dominoes/mapping.pdf}
-    \caption{The mapping of a piece placed in the center of the square and, from left to rifht, orientations $0^\circ,90^\circ,180^\circ, 270^\circ$ respectively.} 
+    \caption{The mapping of a piece placed at the center of the square. From left to right, the orientations are \(0^\circ\), \(90^\circ\), \(180^\circ\), and \(270^\circ\), respectively.}
     \label{dom:mapping} 
 \end{figure}
 
-For the moves, the usual drop and slides will be used. For the fix move we will use the \emph{partial lock rule}, witch only fixes pieces that are completely inside the board. Without this rule the strategy could be followed without the need of having the first row cleared.
+The moves set has the standard drop and slides will be used. For the fix move the \emph{partial lock rule} will be used, witch only fixes pieces that are completely inside the board. Without this rule the strategy could be followed without the need of having the first row cleared.
 
-For the rotation moves, the majority of modern Tetris versions use the Super Rotation System (SRS), which is the official Tetris Guideline standard for the rotation behavior of tetrominoes\cite{SRS}. When a piece is rotated, and it overlaps with a filled cell, SRS tries to place the piece in a nearby position. This is done by checking a some translations to the rotated piece. Following this idea we define a Dominoes Rotation System, DRS, with the Table~\ref{dom:rotation}.
+Regarding rotation moves, most modern Tetris implementations employ the Super Rotation System (SRS), the official Tetris Guideline standard for tetromino rotation behavior \cite{SRS}. In SRS, when a piece is rotated and overlaps with filled cells, the system attempts to reposition the piece by testing a predefined set of translations. 
+
+Following a similar approach, we define a Dominoes Rotation System (DRS), described in Table~\ref{dom:rotation}.
 
 
-\begin{table}[h!]
+\begin{table}[ht]
 \centering
 \begin{tabular}{|c || c | c || c | c ||} 
  \hline
@@ -327,28 +328,32 @@ For the rotation moves, the majority of modern Tetris versions use the Super Rot
  $r_-$ & $\vcenter{\hbox{\includegraphics[scale=0.3]{./pictures/dominoes/rotation/vert_anti_1.pdf}}}$ & $\vcenter{\hbox{\includegraphics[scale=0.3]{./pictures/dominoes/rotation/vert_anti_2.pdf}}}$  & $\vcenter{\hbox{\includegraphics[scale=0.3]{./pictures/dominoes/rotation/horit_anti_1.pdf}}}$  & $\vcenter{\hbox{\includegraphics[scale=0.3]{./pictures/dominoes/rotation/horit_anti_2.pdf}}}$ \\ 
  \hline
 \end{tabular}
-\caption{The DRS rotations table. In the top rows the initial orientation of the piece: if its placed vertically or horizontally. The left columns for the rotation direction, and finally the two tests. In each picture the original piece is painted in white and the resulting piece is painted above.}
+\caption{The DRS rotation table. The top rows indicate the initial orientation of the piece: vertical (\(\VD\)) or horizontal (\(\HD\)). The left columns specify the rotation direction (\(r_+\) for clockwise, \(r_-\) for counterclockwise), and the tests describe possible placements. In each image, the original piece is shown in white, while the resulting piece is displayed over it.}
 \label{dom:rotation}
 \end{table}
 
-\textbf{intuetively drs, r+ tries to place a piece to the right/top and r- to the botom left, depending on the orientation}
+Intuitively, DRS tries to rotate a piece by moving it slightly: \(r_+\) attempts to place the piece to the right or above, while \(r_-\) shifts it to the left or below, depending on its orientation. When a piece is rotated, DRS performs the following steps:
+\begin{enumerate}
+    \item First, DRS attempts the rotation using Test 1. 
+    \item If the resulting piece overlaps with a filled cell, DRS proceeds to Test 2. 
+    \item If Test 2 also fails, the piece cannot be rotated, and the move is deemed illegal.
+\end{enumerate}
 
-
-When a piece is rotated, DRS tries to rotate the piece using the Test 1. If the resulting piece overlaps with a filled cell DRS tries with the second test. If the second test also fails the piece cannot be rotated and the move would be illegal. An example in Figure~\ref{dom:drs}.
+Figure~\ref{dom:drs} provides an example of the DRS rotation system in action.
 
 \begin{figure}[ht]
   \centering
-  \begin{subfigure}[b]{0.2\textwidth}
+  \begin{subfigure}[b]{0.15\textwidth}
     \centering
     \includegraphics[width=0.9\textwidth]{pictures/dominoes/drs-1.pdf}
     \caption{}
   \end{subfigure}
-  \begin{subfigure}[b]{0.2\textwidth}
+  \begin{subfigure}[b]{0.15\textwidth}
     \centering
     \includegraphics[width=0.9\textwidth]{pictures/dominoes/drs-2.pdf}
     \caption{}
   \end{subfigure}
-  \begin{subfigure}[b]{0.2\textwidth}
+  \begin{subfigure}[b]{0.15\textwidth}
     \centering
     \includegraphics[width=0.9\textwidth]{pictures/dominoes/drs-3.pdf}
     \caption{}
@@ -357,33 +362,115 @@ When a piece is rotated, DRS tries to rotate the piece using the Test 1. If the 
   \label{dom:drs}
 \end{figure}
 
-DRS let us move a piece freely through the board and also let pieces to move upwards in a staircase pattern as shown in Figure~\ref{fig:hola}. More importantly a domino can be placed almost anyway.
+DRS allows pieces to move freely across the board, enabling not only standard movements but also upward motion in a staircase-like pattern, as shown in Figure~\ref{dom:staircase}. Most importantly, DRS makes it possible to place a domino in almost any position.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.3\textwidth]{pictures/dominoes/staricase.pdf}
+  \caption{The overvevirew of a tragjectory starting at the left to the rightmost piece. The moves sequece is: $(3 \times s_r, 8 \times r_+, 2 \times s_r)$}
+  \label{dom:staircase}
+\end{figure}
 
 \begin{lemma0}
-For any board configuration $B$, exists a trajectory that places a domino in any position reachable by any grid path that never goes vertically upwards.
+For any board configuration \( B \), there exists a trajectory $\sigma$ that places a domino in any position reachable by a grid path \( p = (c_1, c_2, \dots, c_k) \) such that:
+\begin{enumerate}
+  \item $c_l = \cell\) and \( c_{l+1} = \cell[i+1][j] \) implies \( c_{l+2} \neq \cell[i+2][j] \)
+  \item $  c_l = \cell$, \( c_{l+1} = \cell[i+1][j] \) and \( c_{l+2} = \cell[i+1][j \pm 1] \) if cell $\cell[i][j \pm 1]$ of $B$ is filled respectively.
+\end{enumerate}
 \end{lemma0}
+
+The first excludes paths that go vertically and the second condition ensures that the staircase pattern has its steps.
+
+
+
 \begin{proof}
-    Let $p = ( c_1,\dots ,c_k )$ be a that path. A path goes vertically at cell $c_l = \cell$ if $c_{l+1} = \cell[i+1][j]$ and $c_{l+2} = \cell[i+2][j]$, so no cell of $p$ satisfies that. Let's assume the domino is placed in cells $c_1$ and $c_2$. 
+  Let \( p = (c_1, c_2, \dots, c_k) \) be such a path. We assume that the domino is initially placed in cells \( c_1 \) and \( c_2 \) since the path start at the top of the board.
 
+  We prove that, given a domino placed in \( c_l \) and \( c_{l+1} \), there exists a move or a combination of moves that places the domino in \( c_{l+1} \) and \( c_{l+2} \). By repeating this argument, the entire trajectory can be constructed.
 
-    Proving that given a domino placed in $c_l$ and $c_{l+1}$ there's a move, or a combination of moves, that places the domino in $c_{l+1}$ and $c_{l+2}$ the hole trajectory can be built. If $c_l$ $c_{l+1}$ and $c_{c+2}$ are in the same row/column, a slide/drop respectively the domino can be moved to the new position. The remaining cases are the turns. When the path passes throught filled cells, eight possible scenarios are in Figure~\ref{dom:turns}.
+  If \( c_l \), \( c_{l+1} \), and \( c_{l+2} \) are in the same row (or column) the domino is orientated vertically (horizontally) and can reach the3 next path cell with via a slide (drop). The remaining cases occur at turns. When the path passes through filled cells, there are eight possible scenarios, as shown in Figure~\ref{dom:turns}.
 
 \begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.1\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{./pictures/dominoes/turns.pdf}
-    \caption{The possible turns, in blue the domino and in white the destination cell.} 
+    \includegraphics[width=0.9\textwidth]{pictures/dominoes/turns/turn_1.pdf}
+    \caption{}
+    \label{dom:turn1}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.1\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{pictures/dominoes/turns/turn_2.pdf}
+    \caption{}
+    \label{dom:turn2}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.1\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{pictures/dominoes/turns/turn_3.pdf}
+    \caption{}
+    \label{dom:turn3}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.1\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{pictures/dominoes/turns/turn_4.pdf}
+    \caption{}
+    \label{dom:turn4}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.1\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{pictures/dominoes/turns/turn_5.pdf}
+    \caption{}
+    \label{dom:turn5}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.1\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{pictures/dominoes/turns/turn_6.pdf}
+    \caption{}
+    \label{dom:turn6}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.1\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{pictures/dominoes/turns/turn_7.pdf}
+    \caption{}
+    \label{dom:turn7}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.1\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{pictures/dominoes/turns/turn_8.pdf}
+    \caption{}
+    \label{dom:turn8}
+  \end{subfigure}
+    \caption{The possible turns. The domino before the move is painted, and the destination cell is marked in white. In dark gray the corner cell that varies the moves to be done.} 
     \label{dom:turns} 
 \end{figure}
 
-  The moves can be done respectively with: $r_-$, $r_-$, $r_+$, $r_+$, $r_+$, $r_-$, $r_-$ and $r_+$. In the first, second, fifth and eight turns DRS places the domino in the withe cells even directly, without any interfernce of surrounding cells. For the other moves the piece is placed in the corner, and the with a slide move the solution can be acomplished funnly.
+  The trajectory to perform the move consists on one or two moves, depending on the corner cell. The other cells can be in any configuration. The Table~\ref{dom:turns-table} shows the moves need in each scenario depending if the corner cell is filled.
+
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{|c || c | c | c | c | c | c | c | c |} 
+ \hline
+  & \ref{dom:turn1} & \ref{dom:turn2} & \ref{dom:turn3} & \ref{dom:turn4} & \ref{dom:turn5} & \ref{dom:turn6} & \ref{dom:turn7} & \ref{dom:turn8} \\
+ \hline               
+  filled & $ r_-  $ & $      r_-    $ & $   r_+, s_r  $ & $   r_+       $ & $   r_+       $ & $     r_-     $ & $   r_-       $ & $   r_+      $  \\
+ \hline               
+unfilled & $ r_-  $ & $    na       $ & $   r_+       $ & $   r_+       $ & $    na       $ & $  r_-, s_r   $ & $   r_-       $ & $   r_+      $  \\
+ \hline               
+
+\end{tabular}
+\caption{}
+\label{dom:turns-table}
+\end{table}
+
+The bath can be trajectory in $\mathcal{O}(k)$.
+
 \end{proof}
 
 
-So a piece can be placed anyware of the baord except for the regions that can only be accesed thourhgt a vertiall path. An example of paths:
 
-\textbf{dibuxet guai de camins}
-
-We will divide the problem into two: deciding when the first row can be cleared and deciding when any other row can be cleared.
+% NOTE: to continue
+We will address the problem in two parts: determining the conditions under which the first row can be cleared and identifying the conditions for clearing any subsequent row.
 
 
 \begin{lemma0}
