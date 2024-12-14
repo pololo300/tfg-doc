@@ -1,0 +1,10 @@
+i  ii
+ii  i
+i  ii
+ii  i
+i  ii
+.   .
+.   .
+.   .
+.   .
+i  ii

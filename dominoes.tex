@@ -1,8 +1,57 @@
 \section{Dominoes}
 
-The objective is to find out where the complexity lies in the Tetris. To contribute something in this matter we will study Tetris with dominoes. From the above results it has been seen that adding more complexity in the set of pieces makes it more complicated.
+The objective is to determine the sources of complexity in Tetris. It has been shown\cite{TT, TCB} that increasing the complexity of the set of pieces makes the game more challenging. Consequently, analyzing simpler versions of the game can provide valuable insights. To achieve this, we will focus on studying Tetris with dominoes.
 
-Focusing on 2-\textsc{tris}, Tetris with dominoes, will help in our goal. As it can be seen in Table~\ref{tab:tt}, the variation 2-\textsc{tris-NoRotation} \clearing\ is in \npc and the only domino's problem closed. Let's start by defining the game.
+As shown in Table~\ref{tab:tt}, the variation \textsc{2-{Tris-NoRotation}} \clearing\ is \npc\cite{TT}. This is the only domino-related problem that has been fully resolved. This section begins by reviewing the proof for this result and then explores another variant of the problem.
+
+\subsection{Clearing without rotation}
+
+The proof is a reduction from \textsc{3-Partition} and takes a similar approach as the first Tetris proof\cite{TIH} and other later ones\cite{TT, TWFP, TCB, CTV}. The \textsc{3-Partition} problem is defined as follows:
+
+\textbf{Input:} Given a multiset of positive integers $A = \{ a_1, a_2, \dots, a_{3m} \}$ such that:
+
+$$ \frac{t}{4} < a < \frac{t}{2}\;\; \forall a \in A \text{, where } t = \frac{1}{m} \sum_{i=1}^{3m} a_i $$ 
+
+\textbf{Output:} Decide whether the set can be partitioned into $m$ subsets $D_1, \dots D_m$, each of size $3$ and summing $t$. 
+
+$$ | D_i | = 3 \text{ and } \sum_{a \in D_i} a = t\text{   } 1 \leq i \leq m$$
+
+\begin{theorem} 
+  \textsc{2-{Tris-NoRotation}} \clearing\ is \npc.
+\end{theorem}
+
+\begin{proof}
+  
+  Let $A = \{ a_1, a_2, \dots, a_{3m} \}$ be an instance of \textsc{3-Partition} and $t$ as defined. Let's build the \textsc{2-{Tris-NoRotation}} \clearing\ instance. A \emph{bucket} is five adjacent columns of height $3m + 2t$. A bucket cell $\cell$ is filled if:
+  
+  \begin{itemize}
+    \item $j = 1$ or $j = 5$. 
+    \item for $j = 2$ the cell is filled if $i \leq 2t$ or $i$ is odd.
+    \item for $j = 4$ the cell is filled if $i \leq 2t$ or $i$ is even.
+  \end{itemize}
+
+  Then the board $B$ is made up by attaching $m$ buckets. Each bucket will serve as one $D_i$ in wich the \emph{"numbers"} will be placed during the Tetris game. 
+  \[
+    \underbrace{\vcenter{\hbox{\includegraphics[width=0.1\textwidth]{./pictures/dominoes/proff-nph/bucket.pdf}}}}_{\text{bucket}} 
+    \hspace{-4px}
+    \underbrace{\vcenter{\hbox{\includegraphics[width=0.1\textwidth]{./pictures/dominoes/proff-nph/bucket.pdf}}}}_{\text{bucket}}  
+    \cdots 
+    \underbrace{\vcenter{\hbox{\includegraphics[width=0.1\textwidth]{./pictures/dominoes/proff-nph/bucket.pdf}}}}_{\text{bucket}}  
+  \]
+
+
+  The piece sequence consists on a sequence of vertical ($\VD$) or horitzontal ($\HD$) dominoes. Each $a_i$ is encoded in sequence of dominoes and the sequence is obtained by attaching each $a_i$ encoded. Each $a_i$ is encoded as:
+
+\[
+  a_i \mapsto 
+  ( \underbrace{\HD, \dots, \HD}_{m-1}, \underbrace{\VD, \dots, \VD}_{a_i}, \HD )
+ \]
+
+
+  
+\end{proof}
+
+
 
 \subsection{Definitions}
 
