@@ -1,15 +1,14 @@
-\section{Results}
+\section{Results} 
+% TODO:
 
-With the problem and its variants presented, we present now the most relevant work around Tetris complexity. 
-\textbf{COMENTAR CADA PROBLEMA ENFOCANT A "TROBAR LO QUE FA EL TETRIS COMPLICAT"}
-
-In this section we resume the most relevant results, grouped by the paper in which they appear. They are sorted by publication date. 
+The problem and its variations have been explained, and now the most relevant results from each study to date will be presented. Our initial goal is to understand what makes Tetris complex, so each result will be analyzed in relation to this idea, along with the most notable aspects of the findings.
 
 \subsection{Tetris is hard, even to approximate}
 
-The first results about Tetris complexity appear in \cite{TIH}. This result is about the corresponding of the decisional problems. For example the answer to \texttheo{height-filled} is the minimum $h$ such that $\texttheo{h-height-filled}$ holds.
+The first results regarding Tetris complexity were presented in \cite{TIH}. These findings focus on the decision problems associated with the game. For instance, the solution to the \texttheo{height-filled} problem determines the minimum value of $h$ for which the condition $\texttheo{h-height-filled}$ holds. Most importantly, this work establishes the theoretical framework and provides the first formalization of Tetris.
+
 \begin{theorem}
-  Tetris is \nph to optimize (or approximate) with the objectives, \texttheo{cleared-rows}, \texttheo{tetrises} \texttheo{height-filled} and \texttheo{placed-pices}. It remains \nph even if:
+ \textsc{Tetris} is \nph\ to optimize (or approximate) with the objectives, \texttheo{cleared-rows}, \texttheo{tetrises} \texttheo{height-filled} and \texttheo{placed-pieces}. It remains \nph\ even if:
   \begin{itemize}
     \item The player is restricted to two rotation/translation moves before each piece drops in height.
     \item Pieces are restricted to $\{\LL, \SS, \II, \OO\}$ or $\{\LL, \ZZ, \II, \OO\}$ plus at least one other piece.
@@ -18,9 +17,12 @@ The first results about Tetris complexity appear in \cite{TIH}. This result is a
   \end{itemize}
 \end{theorem}
 
+The main proof involves a reduction from 3-\textsc{Partition}, which serves as the foundation for many subsequent proofs. Later, a reduction from 3-\textsc{Partition} is explained, following the same approach.
+
 \subsection{Total Tetris: Tetris with Monominoes, Dominoes, Trominoes, Pentominoes, ...}
 
-In \cite{TT} a piece variation are explored. For $k \geq 1$ problems, k\textsc{-tris} and \textsc{NoRotation-}k\textsc{-tris}, with \survival\ and \clearing\ are all almost solved. For the basic problem, changing the polyominos set by increasing $k$ adds complexity to the polyminoes and increases the set size. Intuitively we can see that adding complex pieces to a game makes it more complicated. Results are presented in Table~\ref{tab:tt}.
+
+In \cite{TT}, piece variations are explored, specifically considering \textit{k\textsc{-tris}} for $k \geq 1$. Almost all games are solved, as summarized in Table~\ref{tab:tt}, which presents the results in detail. By examining the table, we can observe that the problem becomes NP-hard when $k=2$ (or 3). We will not focus on larger pieces as our objective is to determine what makes Tetris complex, and the table shows that for $k\geq4$ the problems are all \npc. Completing the table would provide valuable information to our purpouse.
 
 \begin{table}[!ht]
 \centering
@@ -48,13 +50,13 @@ In \cite{TT} a piece variation are explored. For $k \geq 1$ problems, k\textsc{-
 
 \subsection{Tetris is NP-hard even with O(1) rows or columns}
 
-In \cite{TCB} board variations are explored. These results help us get more intuition of Tetris complexity. Fixing the board size of the \textsc{Tetris} problem, in order to add complexity to the problem \textbf{TO FINISH:}.
+In \cite{TCB}, board and piece variations are explored. These results provide deeper intuition into the complexity of the Tetris problem. By fixing the board size in the \textsc{Tetris} problem, the input is parameterized by the board size, which intuitively translates to a simpler problem. These results include a new variation that only considers empty boards
 
 \begin{itemize}
   \item \textsc{Empty $(\leq)k$-\textsc{tris}}: $(\leq)k$-\textsc{tris} where all the board cells are initially unfilled.
 \end{itemize}
 
-Results with this variation are in Table~\ref{tab:tcb}. 
+In the results, which are grouped in Table~\ref{tab:tcb}, the idea is reiterated that using a set of pieces with many shapes makes the problem much more complicated. This can be observed in the problem that only considers boards with a single row, which is strongly \nph\ but uses large pieces. We can also see that the table, in its initial configuration, also influences the complexity of the problem. 
 
 \begin{table}[!ht]
 \centering
@@ -81,20 +83,26 @@ Results with this variation are in Table~\ref{tab:tcb}.
 \label{tab:tcb}
 \end{table}
 
+\subsection{Complexity of a Tetris variant}
+
+John Brzustowsky introduced\cite{CYWT} a variant later called \textsc{20g}, where pieces can be freely moved and rotated in the first row until dropped, after which they become fixed. In this paper, we prove that clearing the board in this variant is \textsf{NP}-complete by reducing the 3-partition problem to a specific board-clearing instance, resolving a thirteen-year-old open question.
+
 \subsection{Tetris with Few Piece Types}
 
-In \cite{TWFP} they treat variations with fewer pieces, they only use a subset of the 7 available pieces types of Tetris. It uses the SRS rotation model.
+In \cite{TWFP}, the authors investigate the computational complexity of Tetris, showing that even when restricted to any pair of standard Tetris pieces, the associated decision problem remains in \nph. 
 
 \vspace{10px}
 
-\textbf{Main Result:} for every 2-sized subset of $\{\ALL\}$, Tetris \survival\ and \clearing\ is \nph under SRS.
+\textbf{Main Result:} for every 2-sized subset of $\{\ALL\}$, Tetris \survival\ and \clearing\ is \nph\ under SRS.
 
 \vspace{10px}
-\texttheo{20-G} and \texttheo{Hard-Drop} movement variations are introduced, and some results provided.
+They leave open the problem of determining the complexity when the game is limited to a single piece. An important contribution of this work is the introduction of the Super Rotation System (SRS), which enables more complex piece rotations. 
+\vspace{10px}
+
+Additionally, the \texttheo{20-G} and \texttheo{Hard-Drop} variations are introduced alongside the corresponding results.
 
 \vspace{10px}
 \textbf{Result:} Tetris \texttheo{20-G} and Tetris \texttheo{Hard-Drop} is \npc  even if the pieces set is restricted to $\{ \II, \OO \}$ \cite{TWFP}. 
 
-
-\textbf{Result:} if we allow the piece $\{ \TT \}$, the above result can be extended to \nph.
+\textbf{Result:} If we allow the piece $\{ \TT \}$, the above result can be extended to \nph.
 

@@ -15,8 +15,10 @@
 \usepackage{tabls} %per tenir m{\'e}s control sobre l'espai en les taules nom{\'e}s cal aquest paquet
 \usepackage{indentfirst} %per comen\c{c}ar primer parragraf de seccio o capitol amb indent
 \usepackage{imakeidx}
-\makeindex
+\usepackage{caption}
+\captionsetup{width=.9\textwidth}
 
+\makeindex
 \usepackage[T1]{fontenc}
 \linespread{1.1} % Palatino needs more leading (space between lines)
 
@@ -27,7 +29,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % theorem environments
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\usepackage{tikz}
 \newtheorem{defn0}{Definition}[chapter]
 \newtheorem{prop0}[defn0]{Proposition}
 \newtheorem{thm0}[defn0]{Theorem}
@@ -60,6 +62,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% local definitions for this paper
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newlength{\cellheight}
+\setlength{\cellheight}{\dimexpr 3\baselineskip / 4\relax}
 
 % monomio
 \newcommand{\mono}{\texorpdfstring{\,\vcenter{\hbox{\includegraphics[scale=0.15]{./pictures/monomio/monomio.pdf}}}\,}.}
@@ -95,9 +100,9 @@
 
 \newcommand{\texttheo}[1]{\textnormal{\textsf{#1}}}
 \newcommand{\tetris}[1]{\textsc{Tetris}[#1]\xspace}
-\newcommand{\npc}{\textnormal{\textsf{NP-complete} }}
+\newcommand{\npc}{\textnormal{\textsf{NP-complete}}}
 \newcommand{\pp}{\textnormal{\textsf{P}}}
-\newcommand{\nph}{\textnormal{\textsf{NP-hard} }}
+\newcommand{\nph}{\textnormal{\textsf{NP-hard}}}
 \newcommand{\survival}{$\texttheo{survival}$}
 \newcommand{\clearing}{$\texttheo{clearing}$}
 
@@ -202,11 +207,9 @@
 
 \include{./definicions.tex}
 \include{./variacions.tex}
-\include{./results}
+\include{./results.tex}
 
-  \include{./dominoes.tex}
-
-  % \include{./related_problems.tex}
+\include{./dominos.tex}
 
 
 
