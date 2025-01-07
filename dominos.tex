@@ -1,11 +1,10 @@
-\section{Dominoes}
+\chapter{Dominoes}
 
-The objective is to determine the sources of complexity in Tetris. It has been shown\cite{TT, TCB} that increasing the number of cells that form the pieces adds complexity to the game. Consequently, analyzing simpler versions of the game can provide valuable insights. To achieve this, we will focus on studying Tetris with dominoes.
-
+The objective is to determine the sources of complexity in Tetris. It has been shown\cite{TT, TCB} that increasing the number of cells that form the pieces adds complexity to the game. Consequently, analyzing simpler versions of the game can provide valuable insights. To achieve this, we will focus on studying Tetris with dominoes. This variation is particularly interesting because, when rotation is allowed, there is only one polyomino in the game: the domino. However, when rotation is not allowed, there are effectively two distinct but simple pieces.
 
 As shown in Table~\ref{tab:tt}, the variation \textsc{2-{Tris-NoRotation}} \clearing\ is \npc\cite{TT}. The other 3 variations remain an open problem. This section begins defining the game components, reviews the proof of the \nph\ result and finally explores some of the variations.
 
-\subsection{Definitions}
+\section{Definitions}
 
 Before proceeding further, the missing gaps of the general game definition need to be filled, in order to fit the problem into the previous definition. Starting with how domino piece states are mapped onto the board and how the pieces move. A domino state \( \piece[\VD][\theta][i][j][f] \) is mapped into:
 
@@ -29,7 +28,9 @@ The mapping works like a clock: the piece's position serves as the center, and t
     \label{dom:mapping} 
 \end{figure}
 
-The moves for the dominoes contains the default drop $d$ and slides $s_r, s_l$ . For the fix move the \emph{partial lock out rule}\cite{WikiFandom} will be assumed, fixing only a piece if is entirely  inside the board. Regarding rotation moves, most modern Tetris implementations employ the Super Rotation System (SRS), the official Tetris Guideline standard for tetromino rotation behavior\cite{SRS}. In SRS, when a piece is rotated and overlaps with filled cells, the system attempts to reposition the piece by testing a predefined set of translations. 
+The moves for the dominoes contains the default drop $d$ and slides $s_r, s_l$ . For the fix move the \emph{partial lock out rule}\cite{WikiFandom} will be assumed, fixing only a piece if is entirely  inside the board. Without the rule, variants like \survival\ can be trivially solved when rotation is allowed.
+
+Regarding rotation moves, most modern Tetris implementations employ the Super Rotation System (SRS), the official Tetris Guideline standard for tetromino rotation behavior\cite{SRS}. In SRS, when a piece is rotated and overlaps with filled cells, the system attempts to reposition the piece by testing a predefined set of translations. 
 
 \vspace{1em}
 
@@ -95,8 +96,8 @@ DRS allows pieces to move freely across the board, enabling not only standard mo
   Let $B$ be a board in any configuration. A \emph{path} $p = (c_1,\dots , c_k) $ is a sequence of $k$ adjacent unfilled cells of $B$ where $c_1$ is a cell from the top row.
 \end{definition}
 
-\begin{lemma0} 
-  Given a board $B$, exists a trajectory $\sigma$ for a domino that follows any path $p = (c_1,\dots , c_k) $ satisfying for any $ 1 < l < k $:
+\begin{lemma} 
+  Given a board $B$, exists a trajectory $\sigma$ for a domino that follows any path $p = (c_1,\dots , c_k) $ satisfying for any $ 1 < l < k $:  \label{lemma:paths}
 \begin{enumerate}
   \item if \(c_l = \cell\), \( c_{l+1} = \cell[i+1][j] \) and \( c_{l+2} = \cell[i+2][j] \), then either 
     \begin{enumerate}
@@ -105,7 +106,7 @@ DRS allows pieces to move freely across the board, enabling not only standard mo
     \end{enumerate}
   \item $  c_l = \cell$, \( c_{l+1} = \cell[i+1][j] \) and \( c_{l+2} = \cell[i+1][j \pm 1] \), cell $\cell[i][j \pm 1]$ of $B$ is filled, respectively. \label{dom:path:turn} 
 \end{enumerate}
-\end{lemma0}
+\end{lemma}
 \begin{proof}
   Let \( p = (c_1, c_2, \dots, c_k) \) be such a path. Assuming that the domino is initially placed in cells \( c_1 \) and \( c_2 \) since the path starts at the top of the board. By proving that given a domino placed in \( c_l \) and \( c_{l+1} \) there exists a move, or a sequence of moves, that places the domino in \( c_{l+1} \) and \( c_{l+2} \) the entire trajectory can be constructed. 
 
@@ -205,19 +206,13 @@ Each step can be calculated in constant time, so the path can be computed in $\m
 \end{proof}
 
 
-\subsection{Constructible Boards}
+\section{Constructible Boards}
 
-In this work is assumed that boards initial configurations can be built within the game rules, starting from an empty board.  
+In this work is assumed that boards initial configurations can be built within the game rules, starting from an empty board. The set of constructible configurations for a game variation is bigger as the game has more elements. For $1$\textsc{-Tris} all the boards look like a histogram, since each piece occupies one cell, and for the standard Tetris game almost all configuration are constructible \cite{HCTC}. Next follows a result for constructible boards in dominoes games that will be used in later proofs.
 
-\begin{definition}
-  Given a Tetris game, a board $B$ configuration is \emph{constructible} configuration if exist a match $\Sigma = B_0, \sigma_1, B_1, \dots, B_k$ such that $B_0$ is empty and $B_k = B$. 
-\end{definition}
-
-The set of constructible configurations for a game variation is bigger as the game has more elements. For $1$\textsc{-Tris} all the boards look like a histogram, since each piece occupies one cell, and for the standard Tetris game almost all configuration are constructible \cite{HCTC}. Next follows a result for constructible boards in dominoes games that will be used in later proofs.
-
-\begin{lemma0} \label{lem:floating}
+\begin{lemma} \label{lemma:floating}
   In any constructible board, for any filled cell $\cell$ at least on of the downward neighbors ($\cell[i-1][j-1]$, $\cell[i-1][j]$ and $\cell[i-1][j+1]$) must be filled.
-\end{lemma0}  
+\end{lemma}  
 
 \begin{proof}  
 Let \(B\) be an \(n \times m\) board containing such a filled cell. Consider the sequence of boards \(B_0, B_1, \dots, B_k = B\), where \(B_0\) is an empty board and \(B_k = B\). Assume, without loss of generality, that \(B_k\) is the first board in the sequence containing a filled cell \(\cell_k\) (the cell \(\cell\) in \(B_k\)) such that the cells \(\cell[i-1][j-1]_k\), \(\cell[i-1][j]_k\), and \(\cell[i-1][j+1]_k\) are all unfilled.
@@ -257,9 +252,9 @@ The cell \(\cell_k\) cannot result from adding a domino that does not clear a ro
 
   Let $r$ be the cleared row in \( B_{k-1} \), bottom cleared row in case \ref{dom:proff-floating:clear4}. Consider the board $B_{k-1}$ after placing the domino but before clearing the lines. Each cell $\cell[i'][j']$ from this board has the same downward neighbors as the cell $\cell[i'+1][j']_k$ ($i+2$ in case \ref{dom:proff-floating:clear4}) except for the cells just above the cleared row(s). Hence, cell \(\cell_k \) must be in row $r$: \( \cell_k = \cell[r]_k \).
 
-  Any filled cell in $B_{k-1}$ has one of its downward neighbors filled, so if $\cell[r]_{k-1}$ is filled then $\cell[r]_k$ would have a downward neighbor filled, because cells below row $r$ aren't modified when clearing the row. Therefore, $\cell[r]_k$ can't be in a cell filled in $B_k$. This leads to few options:
+  Any filled cell in $B_{k-1}$ has one of its downward neighbors filled, so if $\cell[r]_{k-1}$ is filled then $\cell[r]_k$ would have a downward neighbor filled, because cells below row $r$ aren't modified when clearing the row. Therefore, $\cell[r]_k$ can't be in a cell filled in $B_k$. This leads to few options, show in Figure~\ref{dom:proff-floating:final-clear}.
 
-\begin{figure}[ht]
+  \begin{figure}[ht] \label{dom:proff-floating:final-clear}
   \centering
   \begin{subfigure}[b]{0.15\textwidth}
     \centering
@@ -312,29 +307,29 @@ After clearing the row, none of the above cases succeed in creating the cell wit
 
 Moreover, this lemma implies that in any constructible configuration, completely floating blocks--i.e., blocks whose lower corners do not touch any domino--cannot exist. 
 
-\begin{corollary0}
+\begin{corollary} \label{coro:column}
   In any constructible configuration, each filled cell forms an uncrossable column down to the bottom of the board.
-\end{corollary0}
+\end{corollary}
 \begin{proof}
-  If a cell is filled, by Lemma~\ref{lem:floating}, one of its downward neighbors is filled. And his downward neighbor filled also has a downward neighbor filled, and so on until the bottom of the board. Due to the shape of the column, it cannot be crossed by any path.
+  If a cell is filled, by Lemma~\ref{lemma:floating}, one of its downward neighbors is filled. And his downward neighbor filled also has a downward neighbor filled, and so on until the bottom of the board. Due to the shape of the column, it cannot be crossed by any path.
 \end{proof}
 
 This characterization also provides insight into the possible arrangements of holes and paths within the board, making it useful for following proofs. The following corollary will help when filling the board. 
 
-\begin{corollary0} \label{coro:fill-split}
+\begin{corollary} \label{coro:no-up-path}
   In any constructible configuration, for any path $p = (c_1, \dots, c_k)$ exists another $p' = (d_1, \dots, d_{k'})$ that starts and ends on same cells while not going upwards. Formally:
   \begin{enumerate}
     \item $c_1 = d_1$, $c_2 = d_2$, $c_{k-1} = d_{k'-1}$ and $c_k = d_{k'}$.
     \item for any $ 1 < l < k'-1$, if $d_l = \cell$ then $d_{l+1} \neq  \cell[i+1]$. \label{lemma:paths:cond2}
   \end{enumerate}
 
-\end{corollary0}
+\end{corollary}
 \begin{proof}
   Let $p = (c_1, \dots, c_k)$ be such a path, and $c_l$ the last cell such that $c_l = \cell$ and $c_{l+1} = \cell[i+1]$. Let $c_m$ be the last cell of $p$ before $c_{l+1}$ at row $i+1$. Consider all cells in row $i+1$ between $c_l$ and $c_m$, as is show in the picture:
 
   $$ \includegraphics[width=0.4\textwidth]{./pictures/dominoes/equivalent-path.pdf} $$
 
-  If any of these cells are filled, by Corollary~\ref{coro:fill-split}, no path could go under row $i+1$, hence between cells are empty. If $c_l = \cell[i+1][j']$, the new path that goes straight thought these cells is: 
+  If any of these cells are filled, by Corollary~\ref{coro:column}, no path could go under row $i+1$, hence between cells are empty. If $c_l = \cell[i+1][j']$, the new path that goes straight thought these cells is: 
 
   $$ p' = (c_1, \dots, c_m = \cell[i+1][j'], \cell[i+1][j'+1], \dots, \cell[i+1][j-1], \cell[i+1]= c_l, \dots c_k)$$
 
@@ -344,7 +339,7 @@ This characterization also provides insight into the possible arrangements of ho
 
 With the previous results a domino can be placed to any position of the board, but not fixed since the below cells can be unfilled. 
 
-\subsection{Tetris Survival with Rotation}
+\section{Tetris Survival with Rotation}
 
 The problem $\textsc{Tetris}\lbrack \VD \rbrack $ \survival\ can be formulated as follows: \emph{Given an arbitrarily sized board with an constructible initial configuration and a sequence of \( k \) dominoes, is there a way to play all the pieces while avoiding losing?} As pointed out\cite{TT}, if there exists a strategy to clear a single row, it is possible to survive indefinitely by employing the following piece-placement strategy:
 
@@ -358,13 +353,13 @@ To solve the problem it must be demonstrated that deciding whether any row can b
 \vspace{1em}
 To clear a row, dominoes must be fixed into specific board positions. The following result shows that determining whether a domino can be placed in a given position can be checked in polynomial time.
 
-\begin{lemma0}
- Let $B$ be an $n\times m $ board, and let $p$ be a path in $B$. Checking if exists a match $\Sigma = B,\sigma_1, B_1, \sigma_2, \dots, \sigma_k, B_k$ such that $\sigma_k$ fixes a domino in any position of the path $p$ can be computed in $\mathcal{O}(n)$.  
-\end{lemma0}
+\begin{lemma} \label{lemma:can-fix}
+ Let $B$ be an $n\times m $ board, and let $p$ be a path in $B$. Checking if exists a match $\Sigma = B,\sigma_1, B_1, \sigma_2, \dots, \sigma_k, B_k$ such that $\sigma_k$ fixes a domino in any position of the path $p$ can be computed in $\mathcal{O}(n)$. If the position is horizontally orientated the answer is always yes.
+\end{lemma}
 \begin{proof} 
-  Let $(c_1, c_2)$ be the desired position in the path. Without loss of generality assume that the path $p$ ends with $(c_1, c_2)$.  Also assume that $p$ doesn't go upwards, by considering the equivalent path provided by Lemma~\ref{coro:fill-split}.
+  Let $(c_1, c_2)$ be the desired position in the path. Without loss of generality assume that the path $p$ ends with $(c_1, c_2)$.  Also assume that $p$ doesn't go upwards, by considering the equivalent path provided by Lemma~\ref{coro:no-up-path}.
 
-  Since $(c_1, c_2)$ are in the end of a path, by Lemma~\ref{dom:path:turn} exists a trajectory $\sigma$ that places a domino in $(c_1, c_2)$. The piece now needs to be fixed. If the cell below $c_1$ or the cell below $c_2$ is filled the domino can be fixed directly. Otherwise, when the domino can't be fixed one of the below pieces has to be filled. When the domino is horizontally orientated it can be fixed by repeteadly placing the domino in $(c_1, c_2)$ with $\sigma$ and hard dropping it eventually a domino will be fixed in $(c_1, c_2)$.
+  Since $(c_1, c_2)$ are in the end of a path, by Lemma~\ref{lemma:paths} exists a trajectory $\sigma$ that places a domino in $(c_1, c_2)$. The piece now needs to be fixed. If the cell below $c_1$ or the cell below $c_2$ is filled the domino can be fixed directly. Otherwise, when the domino can't be fixed one of the below pieces has to be filled. When the domino is horizontally orientated it can be fixed by repeteadly placing the domino in $(c_1, c_2)$ with $\sigma$ and hard dropping it eventually a domino will be fixed in $(c_1, c_2)$.
 
   \[
     \vcenter{\hbox{\includegraphics[width=0.04\textwidth]{pictures/dominoes/proff-fix/horti-1.pdf}}}
@@ -435,28 +430,122 @@ To clear a row, dominoes must be fixed into specific board positions. The follow
 
 \end{proof}
 
-Note that the proof doesn't if any row is cleared when filling the board, this is because the goal is to fully fill a row. If at some point a row is cleared then the goal would be acomplished. Now we are ready to solve the main question of $\textsc{Tetris}\lbrack \VD \rbrack $ \survival. 
+Note that the proof doesn't ensure that no row is cleared when filling the board, this is because the goal is to fully fill a row. If at some point a row is cleared then the goal would be acomplished. Now we are ready to solve the main question of $\textsc{Tetris}\lbrack \VD \rbrack $ \survival.
 
-\begin{lemma0} \label{dom:clear-top}
+\begin{lemma} \label{dom:clear-top}
 For any $n \times m$ board, deciding whether the top row can be cleared is in \pp.
-\end{lemma0}
+\end{lemma}
 \begin{proof}
+Consider the top row of an \( n \times m \) board in a given configuration, and split the row into groups of adjacent empty cells, which will henceforth be referred to as \emph{holes}. To clear the top row, it must be fully filled, and this requires that all its holes are fully filled. 
+
+A hole of even length can always be filled entirely by placing horizontal dominoes, as guaranteed by Lemma~\ref{lemma:can-fix}. 
+
+When the length of a hole is odd, one vertical domino must be placed. Enumerating the cells of the hole starting from 1, the vertical domino must be placed in any odd-positioned cell to avoid requiring additional vertical dominoes. Verifying whether the vertical domino can be placed in a positotion has cost of \( \mathcal{O}(n) \), again by Lemma~\ref{lemma:can-fix}. 
+
+Since there are at most \( \mathcal{O}(m) \) holes in the top row, the total computational cost of filling all holes in the top row is \( \mathcal{O}(n \cdot m) \).
+
 \end{proof}
 
-\begin{lemma0} \label{dom:clear-row}
+\begin{lemma} \label{dom:clear-row}
 For any $n \times m$ board, deciding if any row, except the first one, can be cleared is in \pp.
-\end{lemma0}
+\end{lemma}
 
 \begin{proof}
-  % Let $r < m$ be the row to be checked. To fill completely the row all the holes need to be fully filled. Let $h = \{ \cell[r][j_1], \dots, \cell[r][j_2]\}$ a hole in row $r$ from column $j1$ to column $j_2$.  
+  To fill any row all its holes have to be filled, to do so there must exist a path that reaches any cell in the hole in order to fill it, if not the row can't be cleared. By Lemma~\ref{lemma:floating}, the hole and the row above can be in one of the following shapes:  
+
+\begin{figure}[ht]
+  \centering
+  \begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{pictures/dominoes/row-holes/simple-hole-1.pdf}
+    \caption{}
+    \label{dom:fill-row:hole-a}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{pictures/dominoes/row-holes/simple-hole-2.pdf}
+    \caption{}
+    \label{dom:fill-row:hole-b}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{pictures/dominoes/row-holes/simple-hole-3.pdf}
+    \caption{}
+    \label{dom:fill-row:hole-c}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{pictures/dominoes/row-holes/simple-hole-4.pdf}
+    \caption{}
+    \label{dom:fill-row:hole-d}
+  \end{subfigure}
+  \label{dom:fill-row:holes}
+  \caption{The possible shape of the holes in a row.}
+\end{figure}
+
+When the length of a hole is even, all holes can be filled by placing horizontal dominoes one by one, which, by Lemma~\ref{lemma:can-fix}, can always be done. When the length of a hole is odd, a vertical domino is required.
+
+In hole~\ref{dom:fill-row:hole-a}, horizontal dominoes are placed from left to right, and the process is finished by placing a vertical domino at the right. Hole~\ref{dom:fill-row:hole-c} follows a similar approach, and hole~\ref{dom:fill-row:hole-d} can be filled in the same manner as either of the two previous cases. 
+
+In a hole of type~\ref{dom:fill-row:hole-b} with length greater than 3 cells, dominoes can be placed from outside to inside, leaving a free cell in the middle to place the vertical domino as before. When the hole has length 3, it must be filled as follows:
+$$ 
+\includegraphics[width=0.11\textwidth]{./pictures/dominoes/row-holes/hole-3-1.pdf}
+\hspace{3em}
+\includegraphics[width=0.11\textwidth]{./pictures/dominoes/row-holes/hole-3-2.pdf}
+$$
+
+By Lemma~\ref{lemma:can-fix}, checking if any vertical dominoes can be placed has a cost of \( \mathcal{O}(n) \). The overall cost of filling a hole is thus \( \mathcal{O}(n) \), as the other dominoes can always be placed. 
+
+In the worst-case scenario, all holes are of type~\ref{dom:fill-row:hole-b} with length 3, leading to a row cost of \( \mathcal{O}(m \cdot n) \). For any row except the first one, the overall cost is \( \mathcal{O}(m \cdot n^2) \), which is polynomial.
+
+   
 \end{proof}
 
+In order to compute the maximum number of dominoes that can be placed into the board, the following result from Hopcroft and Karp\cite{MMBG} will be used:
 
-\begin{lemma0} \label{dom:max-fill}
+\begin{theorem}[Hopcroft-Karp algorithm]\label{graph:Hopcroft-Karp}
+  Let $G = (V,E)$ be a bipartite graph. There is anlgorithm that computes maximum matching in $\mathcal{O}(|E|\sqrt{|V|})$. 
+\end{theorem}
+
+\begin{lemma} \label{dom:max-fill}
   Let $B$ be a board such that no row can be cleared. The maximum number of dominoes that can be fixed into the board before loosing can be computed in $\mathcal{O}(??)$.
-\end{lemma0}
+\end{lemma}
 
 \begin{proof}
+  Let $B$ be a board where no row can be cleared. Let $G = (V,E)$ the graph of reachable cells:
+  \begin{equation*}
+    \begin{split}
+      V & = \{ \cell \mid \exists p \text{ path,  such that} \cell \in p \} \\
+      E & = \{ (c_1, c_2) \mid c_1 \text{ adjacent } c_2 \} 
+    \end{split}
+  \end{equation*}
+
+
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{./pictures/dominoes/proof-max-fill/board.pdf}
+    \end{minipage}
+    \begin{minipage}{0.1\textwidth}
+        \centering
+        $\longrightarrow$
+    \end{minipage}
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{./pictures/graph.pdf}
+    \end{minipage}
+
+  \vspace{1em}
+  
+  When the board is empty, the graph \( G \) is a grid, and for any board configuration, \( G \) is a subgraph of the grid. Since a grid graph is bipartite, any subgraph of the grid is also bipartite. Therefore, the graph \( G \) corresponding to the board \( B \) is bipartite for any configuration of the board.
+
+  By Theorem~\ref{graph:Hopcroft-Karp}, the maximum matching of \( G \) can be computed in \( \mathcal{O}(|E| \sqrt{|V|}) \). In this case, \( |V| = \mathcal{O}(n \cdot m) \) and \( |E| = \mathcal{O}(n \cdot m) \), so the maximum matching can be computed in \( \mathcal{O}((mn)^{3/2}) \).
+
+  Let \( M \) denote the maximum matching of \( G \). Each edge in \( M \) corresponds to a pair of adjacent empty cells where a domino can be placed. It remains to show that all \( k \) dominoes can be placed on the board \( B \).
+
+  Now, let us transform the matching \( M \) into a new matching, \( M' \), by removing all edges that correspond to pairs of cells above filled cells. \( M' \) retains the same number of dominoes, and each domino is placed above a filled cell, or another domino.
+
+  By Lemma~\ref{coro:no-up-path}, a domino can be placed on each edge of \( M' \). To ensure that all dominoes can be placed in their respective positions, the order in which they are placed corresponds to their distance from the top row. Self-blocking is avoided because the domino placed furthest from the top can always be placed first without blocking any other dominoes. The distance of each domino can be computed by just exploring the board and the sorting can be done in polynomial time. So the overall cost is \( \mathcal{O}((mn)^{3/2}) \).
+
 \end{proof}
 
 \begin{theorem}
@@ -464,26 +553,35 @@ For any $n \times m$ board, deciding if any row, except the first one, can be cl
 \end{theorem}
 
 \begin{proof}
+  Let \( B \) be an \( n \times m \) board with a given constructible configuration, and let \( k \) be the number of dominoes to be placed. By Lemma~\ref{dom:clear-row} and Lemma~\ref{dom:clear-top}, it can be determined, in polynomial time, whether any row can be cleared by checking from bottom to top. If a row can be cleared, it is possible to survive indefinitely by placing the dominoes vertically in any column where the top cell is unfilled. Hence, the answer is "yes".
+
+  If no row can be cleared, then by Lemma~\ref{dom:max-fill}, the maximum number of dominoes, \( k_{\text{max}} \), that can be fixed onto the board before losing can be computed. Therefore, if \( k \leq k_{\text{max}} \), the answer is "yes"; otherwise, it is "no."
 \end{proof}
 
-\subsection{Clearing without rotation}
+\section{Clearing without rotation}
 
-The proof is a reduction from \textsc{3-Partition} and takes a similar approach as the first Tetris proof\cite{TIH} and other later ones\cite{TT, TWFP, TCB, CTV}. The \textsc{3-Partition} problem is defined as follows:
+The proof doesn't use exactly \textsc{3-Partition} for the reduction, it uses a similar problem. The reduction and takes a similar approach as the first Tetris proof\cite{TIH} and other later ones\cite{TT, TWFP, TCB, CTV}. The problem is defined as follows:
+\vspace{1em}
 
-\textbf{Input:} Given a multiset of positive integers $A = \{ a_1, a_2, \dots, a_{3m} \}$ such that:
+\begin{problem}[\textsc{3-Partition with Distinct Integers}]
+  
+ Given a multiset of positive integers $A = \{ a_1, a_2, \dots, a_{3m} \}$ such that:
 
 $$ \frac{t}{4} < a < \frac{t}{2}\;\; \forall a \in A \text{, where } t = \frac{1}{m} \sum_{i=1}^{3m} a_i $$ 
 
-\textbf{Output:} Decide whether the set can be partitioned into $m$ subsets $D_1, \dots D_m$, each of size $3$ and summing $t$. 
+ Decide whether the set $A$ can be partitioned into $m$ subsets $D_1, \dots D_m$, each of size $3$ and summing $t$. 
 
 $$ | D_i | = 3 \text{ and } \sum_{a \in D_i} a = t\text{   } 1 \leq i \leq m$$
+\end{problem}
+
+Hulett, Will and Woeginger\cite{3PART} proved that the problem is strongly \nph.
 
 \begin{theorem} 
   \textsc{2-{Tris-NoRotation}} \clearing\ is \npc.
 \end{theorem}
 
 \begin{proof}
-  \textbf{TO FINISH: pictures need impovement}
+  \textbf{PROOF TO FINISH}
 
   Let \( A = \{ a_1, a_2, \dots, a_{3m} \} \) be an instance of the \textsc{3-Partition} problem with \( t \) as defined. Construct the corresponding instance of \textsc{2-Tris-NoRotation} as follows:
 
@@ -539,12 +637,13 @@ $$ | D_i | = 3 \text{ and } \sum_{a \in D_i} a = t\text{   } 1 \leq i \leq m$$
 
 \end{proof}
 
-\subsection{Towards Clearing}
+\section{Towards Clearing}
+
+The next objecive is \textsc{2-tris} \clearing, the problem won't be solved but some intermediate results will be shown. Starting with simpler game versions
+
 \subsection{Tetris with Vertical Dominoes}
 
-Using the notation introduced earlier, the problem is as $\textsc{Tetris-NoRotation}\lbrack \VD \rbrack$, considering both \clearing\ and \survival. The input consists of a sequence of vertical dominoes and an arbitrarily sized $n \times m$ board in a constructible configuration. The initial state function in this variation differs from the default orientation, as the pieces must be from the beginning in a vertical orientation.
-
-\subsubsection{Constructible board configurations}
+Using the notation introduced earlier, the problem can be described as \( \textsc{Tetris-NoRotation}[\VD] \) \clearing. The input consists of a sequence of vertical dominoes and an arbitrarily sized \( n \times m \) board in a constructible configuration. In this variation, the initial state function differs from the default orientation, as the pieces are required to be in a vertical orientation from the beginning.
 
 First we will to characterize the constructible boards with $\VD$ pieces without rotation by exploring the configuration starting from an empty board. 
 
@@ -568,12 +667,12 @@ Each $a_i$ counts the number of vertical pieces placed in the column $i$. For ex
 
 \begin{figure}[ht]
   \centering
-  \begin{subfigure}[b]{0.2\textwidth}
+  \begin{subfigure}[b]{0.15\textwidth}
     \centering
     \includegraphics[width=0.9\textwidth]{pictures/dominoes/vertical_configuration.pdf}
     \caption{}
   \end{subfigure}
-  \begin{subfigure}[b]{0.2\textwidth}
+  \begin{subfigure}[b]{0.15\textwidth}
     \centering
     \includegraphics[width=0.9\textwidth]{pictures/dominoes/vertical_configuration_filled.pdf}
     \caption{}
@@ -581,10 +680,6 @@ Each $a_i$ counts the number of vertical pieces placed in the column $i$. For ex
     \caption{The $10 \times 6 $ board configuration represented by the sequence $(1,2,0,4,2,3)$, in yellow the 13 dominoes needed to clear the board.}
   \label{dom:vconf}
 \end{figure}
-
-\subsubsection{Cleaing}
-
-In this decisional problem the input is a sequence of $k$ vertical dominoes and an $n \times m$ board with an initial configuration, that can be represented by the sequence $(a_1, \dots, a_m)$ as before. The question is: \emph{Is ther a way to clean the board after placing the $k$ pieces?}
 
 \begin{theorem} 
 $\textsc{Tetris-NoRotation}\lbrack \VD \rbrack $ \clearing\ is in \pp.
@@ -599,17 +694,12 @@ $\textsc{Tetris-NoRotation}\lbrack \VD \rbrack $ \clearing\ is in \pp.
     If $k < k_{\min}$ we can't clear the board. If $k =  k_{\min}$ we can clear the board. And when $k > k_{\min}$, we can clean the board if after placing $k_{\min}$ dominoes the number of remaining pieces is a multiple of the board width, $k - k_{\min} \equiv 0 \mod m$. Since all the computations can be done in polyatomic time in respect of the input, the problem is in \pp.
 \end{proof}
 
-For boards with an even number of rows all pieces always fit inside the board. For an odd number of rows, dominoes could be placed in the top row with half of the domino inside the board and half outside. If we allow this, by changing the \emph{fix} function, the result would be the same since the same strategy works. The Figure~\ref{dom:vconf} shows, in yellow color, how the number of pieces needed to clean the board.
-
-\subsubsection{Survival}
-
-With the same input, the objective is to do not lose. The last proof provides a strategy to survive indefinitely. So for any number of pieces $k$ there is a way to avoid losing. Hence:
-\begin{theorem} 
-$\textsc{Tetris-NoRotation}\lbrack \VD \rbrack $ \survival\ is in \pp.
-\end{theorem}
+The Figure~\ref{dom:vconf} shows, in yellow color, how the number of pieces needed to clean the board.
 
 
 \subsection{Tetris with horizontal dominoes}
+
+(treure survival?)
 
 As before, the problem is $\textsc{Tetris-NoRotation}\lbrack \HD \rbrack$, considering both \clearing\ and \survival. Placing a horizontal domino fills two adjacent cells in one row or clears the row, meaning each domino placed can be tracked until the row is cleared. Thus, for any initial constructible configuration, the filled cells can be uniquely grouped into dominoes, allowing us to refer to dominoes instead of individual filled cells.
 
@@ -617,9 +707,9 @@ Additionally, in any constructible board, each row must contain an even number o
 
 Let $B$ be a board with $m$ columns. We divide the board into $m/2$ \emph{buckets}, where each bucket consists of a pair of consecutive columns. Then:
 
-\begin{lemma0}   
+\begin{lemma}   
     Not placing a domino inside a bucket makes the row unclearable.
-\end{lemma0}
+\end{lemma}
 \begin{proof}
     Let $r$ be a row containing some dominoes. When a domino is placed in a bucket it divides the row into two parts: the cells on the left side of the domino and the ones on the right. Both parts of even length, and containing an even number of filled cells.
 
@@ -709,31 +799,31 @@ To maximize the number of dominoes in the board, each row's holes must be filled
 
 Let \( h = \{\cell[r][j_1], \cell[r][j_1+1], \dots, \cell[r][j_2]\} \) represent a hole in row \( r \) spanning columns \( j_1 \) to \( j_2 \). All cells in \( h \) are empty, and the boundary cells \( \cell[r][j_1-1] \) and \( \cell[r][j_2+1] \) are either filled or lie outside the board. To place a domino inside the hole, there must exist a trajectory from the top of the board to \( h \), making only reachable holes relevant for consideration.
 
-Using Lemma~\ref{lem:floating} a hole must take one of the following shapes:
+Using Lemma~\ref{lemma:floating} a hole must take one of the following shapes:
 
 \begin{figure}[ht]
   \centering
   \begin{subfigure}[b]{0.24\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{pictures/dominoes/simple-hole-1.pdf}
+    \includegraphics[width=0.9\textwidth]{pictures/dominoes/row-holes/simple-hole-1.pdf}
     \caption{}
     \label{dom:hole-a}
   \end{subfigure}
   \begin{subfigure}[b]{0.24\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{pictures/dominoes/simple-hole-2.pdf}
+    \includegraphics[width=0.9\textwidth]{pictures/dominoes/row-holes/simple-hole-2.pdf}
     \caption{}
     \label{dom:hole-b}
   \end{subfigure}
   \begin{subfigure}[b]{0.24\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{pictures/dominoes/simple-hole-3.pdf}
+    \includegraphics[width=0.9\textwidth]{pictures/dominoes/row-holes/simple-hole-3.pdf}
     \caption{}
     \label{dom:hole-c}
   \end{subfigure}
   \begin{subfigure}[b]{0.24\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{pictures/dominoes/simple-hole-4.pdf}
+    \includegraphics[width=0.9\textwidth]{pictures/dominoes/row-holes/simple-hole-4.pdf}
     \caption{}
     \label{dom:hole-d}
   \end{subfigure}
@@ -775,7 +865,11 @@ Finally, the algorithm to decide the problem would look like:
 
 The cost of the algorithm is $\mathcal{O}(n \cdot m)$, since looping throught the holes has cost $\mathcal{O}(m)$ and filling the hole maximally has constant cost when the hole shape is known.
 
-\end{proof}
+\subsection{Clearing the board}
 
+Mes resultats
+
+
+\end{proof}
 
 

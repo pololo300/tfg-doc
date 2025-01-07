@@ -1,0 +1,10 @@
+
+    c     
+    c    cc
+c  cc   ccc 
+cc  ccc  ccc
+c    cccc  c
+cccc  cc  cc
+ccc  cc    c
+cc    c  ccc
+c    ccccccc

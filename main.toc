@@ -1,0 +1,29 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Game Definitions}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Game Components}{3}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}The Board}{3}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Pieces}{4}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Moves}{5}{subsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.1.4}Match}{6}{subsection.2.1.4}%
+\contentsline {section}{\numberline {2.2}Problem}{8}{section.2.2}%
+\contentsline {chapter}{\numberline {3}Game variations}{11}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Basic Tetris}{11}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Pieces Variations}{12}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Board Variations}{12}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Moves Variations}{12}{section.3.4}%
+\contentsline {chapter}{\numberline {4}Literature Review}{15}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Tetris is hard, even to approximate}{15}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Total Tetris: Tetris with Monominoes, Dominoes, Trominoes, Pentominoes, ...}{16}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Tetris is NP-hard even with O(1) rows or columns}{16}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Complexity of a Tetris variant}{17}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Tetris with Few Piece Types}{17}{section.4.5}%
+\contentsline {chapter}{\numberline {5}Dominoes}{19}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Definitions}{19}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Constructible Boards}{23}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Tetris Survival with Rotation}{25}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Clearing without rotation}{30}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Towards Clearing}{32}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Tetris with Vertical Dominoes}{32}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Tetris with horizontal dominoes}{34}{subsection.5.5.2}%
+\contentsline {subsection}{\numberline {5.5.3}Clearing the board}{37}{subsection.5.5.3}%

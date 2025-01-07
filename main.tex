@@ -1,4 +1,4 @@
-\documentclass[a4paper,13pt]{book}
+\documentclass[a4paper,11pt]{book}
 \usepackage[centertags]{amsmath}
 \usepackage{amscd}
 \usepackage{amsthm}
@@ -6,7 +6,8 @@
 \usepackage{enumerate}
 \usepackage[dvips]{graphics}
 \usepackage{graphicx, subcaption} % takes care of graphic including machinery
-\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{algpseudocode} 
 \usepackage{multicol}
 \usepackage{hyperref}
 \usepackage[english]{babel}
@@ -29,7 +30,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % theorem environments
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{tikz}
 \newtheorem{defn0}{Definition}[chapter]
 \newtheorem{prop0}[defn0]{Proposition}
 \newtheorem{thm0}[defn0]{Theorem}
@@ -38,6 +38,7 @@
 \newtheorem{example0}[defn0]{Example}
 \newtheorem{remark0}[defn0]{Remark}
 \newtheorem{conjecture0}[defn0]{Conjecture}
+\newtheorem{prob0}[defn0]{Problem}
 
 \newenvironment{definition}{ \begin{defn0}}{\end{defn0}}
 \newenvironment{proposition}{\bigskip \begin{prop0}}{\end{prop0}}
@@ -47,6 +48,7 @@
 \newenvironment{example}{ \begin{example0}\rm}{\end{example0}}
 \newenvironment{remark}{ \begin{remark0}\rm}{\end{remark0}}
 \newenvironment{conjecture}{\begin{conjecture0}}{\end{conjecture0}}
+\newenvironment{problem}{\begin{prob0}}{\end{prob0}}
 
 \newcommand{\defref}[1]{Definition~\ref{#1}}
 \newcommand{\propref}[1]{Proposition~\ref{#1}}
@@ -57,6 +59,7 @@
 \newcommand{\secref}[1]{Section~\ref{#1}}
 \newcommand{\remref}[1]{Remark~\ref{#1}}
 \newcommand{\conjref}[1]{Conjecture~\ref{#1}}
+\newcommand{\probref}[1]{Problem~\ref{#1}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -101,6 +104,7 @@
 \newcommand{\texttheo}[1]{\textnormal{\textsf{#1}}}
 \newcommand{\tetris}[1]{\textsc{Tetris}[#1]\xspace}
 \newcommand{\npc}{\textnormal{\textsf{NP-complete}}}
+\newcommand{\np}{\textnormal{\textsf{NP}}}
 \newcommand{\pp}{\textnormal{\textsf{P}}}
 \newcommand{\nph}{\textnormal{\textsf{NP-hard}}}
 \newcommand{\survival}{$\texttheo{survival}$}
@@ -108,12 +112,14 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%% aixo pels headings %%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\headheight}{14.5pt}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
 \fancyhf{} \fancyhead[LE,RO]{\bfseries\thepage}
-\fancyhead[LO]{\bfseries\rightmark} \fancyhead[RE]{\bfseries\leftmark}
+\fancyhead[LO]{\bfseries\rightmark} 
+\fancyhead[RE]{\bfseries\leftmark}
 
 \def\paginaenblanc{\newpage%
 \thispagestyle{empty}%
@@ -203,6 +209,61 @@
 }
 \makeatother
 
+
+\begin{titlepage}
+\begin{center}
+\begin{figure}[htb]
+\begin{center}
+  \includegraphics[width=6cm]{./pictures/matematiquesinformatica-pos-rgb.png}
+\end{center}
+\end{figure}
+
+\vspace*{1cm}
+\textbf{\LARGE GRAU DE MATEM\`{A}TIQUES } \\
+\vspace*{.5cm}
+\textbf{\LARGE Treball final de grau} \\
+
+
+
+\vspace*{1.5cm}
+\rule{16cm}{0.1mm}\\
+\begin{Huge}
+\textbf{Complexitat del Tetris} \\
+\end{Huge}
+\rule{16cm}{0.1mm}\\
+
+\vspace{1cm}
+
+\begin{flushright}
+  \textbf{\LARGE Autor: Pol Ros Dom\`{e}nech}
+
+\vspace*{2cm}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{ll}
+\textbf{\Large Director:} & \textbf{\Large Dr. Kolja Knauer} \\
+\textbf{\Large Co-Directora:} & \textbf{\Large Dr. Carme \`Alvarez Faura} \\
+\textbf{\Large Realitzat a:} & \textbf{\Large  Departament Matem\`{a}tica Aplicada } \\
+\textbf{\Large Barcelona,} & \textbf{\Large \today }
+\end{tabular}
+
+\end{flushright}
+
+\end{center}
+
+\end{titlepage}
+
+\tableofcontents
+%%%%%%%%%%%%%%%%%%%%% aix{\`o} pels headings %%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+
+
+\input{./abstract.tex}
+
+\mainmatter
+
 \include{./intro.tex}
 
 \include{./definicions.tex}
@@ -212,9 +273,7 @@
 \include{./dominos.tex}
 
 
-
 \bibliographystyle{plain}
 \bibliography{references} 
 
-\printindex
 \end{document}

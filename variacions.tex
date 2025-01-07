@@ -1,13 +1,12 @@
-\section{Game variations}
-% TODO:
+\chapter{Game variations}
 
-\textsc{Tetris}'s inputs are the board and the sequence of pieces, but to define the problem all other parameters need to be specified. To define a game we need to provide: the polyominos that will appear in the game, the available moves and the initial state function.
+A preliminary study on variants classifies different versions of the game into the following categories: limitations on player agility, piece set, losses, and rotation rules\cite{TIH}. Building upon this classification, we extend the previous work with the new definitions. The inputs for \textsc{Tetris} consist of the game board and the sequence of pieces. However, to fully define the problem, all other parameters must also be specified. Specifically, to define a game, we need to provide the polyominos that will appear, the available moves, and the initial state function.
 
 In order to present all variations we will first define the basic Tetris, the problem presented in \cite{TIH}. Then a Tetris variation is the basic problem, but with some changes on the parameters. Two variations can be combined to produce a new one. Variations are grouped by the parameters they tweak.
 
 We are introducing also some notation to define different Tetris games. 
 
-\subsection{Basic Tetris}
+\section{Basic Tetris}
 
 The problem is:
 
@@ -18,52 +17,56 @@ Let's break down the definition into parts. $T_4$ indicates that all the instanc
 For the objective function $\Phi$, \clearing\ or \survival\ will be both considered.
 
 
-\subsection{Pieces Variations}
+\section{Pieces Variations}
 
-These variations change the set of polyominoes $T$ of the problem. 
-
-\begin{itemize}
-
-  \item $k\textsc{-tris} := \textsc{Tetris}[T = T_k]$ 
-
-  \item $\leq k\textsc{-tris} := \textsc{Tetris}[T = T_1 \cup \dots T_k]$
-
-\end{itemize}
-
-The first changes the classic $T_4$ polyominoes by $T_k$, the set that contains all the $k$-ominoes. The second one uses all the $q$-ominoes up to $k$. We can also consider variation with some specific pieces. For example, in \cite{TWFP}, the variation uses subsets of $T_4$. We can write:
-
-$$\textsc{Tetris}[\{ \TT, \OO \}] := \textsc{Tetris}[T = \{ \TT, \OO \}]$$
-
-abusing the notation. The above problem is the basic Tetris restricting the tetrominos to the two indicated pieces.
-
-
-\subsection{Board Variations}
-
-With boards, restricting the set of board dimensions, new variations appear.
+These variations modify the set of polyominos \( T \) used in the problem.
 
 \begin{itemize}
-
-  \item $c\textsc{-column-Tetris} := \textsc{Tetris}$ where all input boards have $c$ columns.
-  \item $r\textsc{-row-Tetris} := \textsc{Tetris}$ where all input boards have $r$ rows.
+  \item \( k\textsc{-tris} := \textsc{Tetris}[T = T_k] \)
+  \item \( \leq k\textsc{-tris} := \textsc{Tetris}[T = T_1 \cup \dots \cup T_k] \)
 \end{itemize}
 
-In this case $c$\textsc{-column-Tetris} and $r$\textsc{-row-Tetris} instances are a subset of basic Tetris instances, only admitting instances where the board width, respectively the height, is $c$, respectively $r$.
+The first variation replaces the classic \( T_4 \) polyominos with \( T_k \), the set of all \( k \)-ominos. The second variation utilizes all \( q \)-ominos up to \( k \). Additionally, we can consider variations that involve specific subsets of polyominos. For example, a variation that uses a subset of \( T_4 \) can be expressed as follows:
 
-\subsection{Moves Variations}
+\[
+\textsc{Tetris}[\{ \TT, \OO \}] := \textsc{Tetris}[T = \{ \TT, \OO \}]
+\]
 
-Move variations cover a wither range of different games, making it more difficult to classify. Usually consists on adding or removing moves to the standard set. Inset we present popular variations. The most simple game variation is:
+Representing the basic Tetris game, restricted to the tetrominos \( \TT \) and \( \OO \).
+
+
+\section{Board Variations}
+
+This variation imposes conditions on the valid board inputs. By restricting the set of board dimensions, new variations of the game emerge:
 
 \begin{itemize}
-  \item $\textsc{Tetris-NoRotation} := \textsc{Tetris}[M = \{s_l, s_r, d, f\}]$
+  \item \( c\textsc{-column-Tetris} := \textsc{Tetris} \) where all input boards have \( c \) columns.
+  \item \( r\textsc{-row-Tetris} := \textsc{Tetris} \) where all input boards have \( r \) rows.
 \end{itemize}
 
-As the name indicates, in the matches of this problem the player cannot rotate the pieces. When playing Tetris, specially in the initial rounds of a game, the player can hard drop a piece in order to avoid dropping the piece one row at a time. Hard-dropping a piece moves it maximally downward before fixing into place. \emph{drop} and \emph{fix} are removed from the set of moves, and \emph{hard-drop} is added.  
+In this context, \( c\textsc{-column-Tetris} \) and \( r\textsc{-row-Tetris} \) are subsets of the basic Tetris game, where the board width is fixed at \( c \) columns and the board height is fixed at \( r \) rows, respectively.
+
+Additionally, we can impose conditions on the board's initial configuration. For example, we might require the board to be completely empty, with all cells unfilled:
 
 \begin{itemize}
-  \item $\textsc{Tetris-HardDrop} := \textsc{Tetris}[M = \{ r_+, r_-, s_l, s_r, hd \}]$
+  \item \textsc{Empty-\textsc{Tetris}}: \textsc{Tetris} where all board cells are initially empty.
 \end{itemize}
 
-In some video game implementations, players have the ability to set aside a piece for later use \cite{WikiFandom}. By adding a \emph{hold function} to the set of available moves, we can define a variation known as \textsc{Tetris-WithHold}. However, this functionality will not be explored at this time.
+Another condition that could be imposed on the board is constructibility, as described earlier. It will be assumed that all boards are constructible.
+
+\section{Moves Variations}
+
+Move variations involve changes to the set of moves available in the game, ranging from rotating a piece to fixing it onto the board. These variations consist of adding, modifying, or removing moves from the standard set. Changes to the rotation functions, referred to as rotation variations, can include eliminating rotations entirely, such as:
+
+\begin{itemize} \item $\textsc{Tetris-NoRotation} := \textsc{Tetris}[M = \{s_l, s_r, d, f\}]$ \end{itemize}
+
+Alternatively, more complex rotation rules, such as Tetris standard SRS \cite{WikiFandom}, may be used. The aforementioned \emph{partial lock-out rule} is also a modification of the fix function, whic can be adjusted to either place the piece entirely within the board or fix it to just a single cell.
+
+Other variations, for example, stem from the video game itself. In Tetris, especially during the early rounds, players can use the hard drop feature to avoid dropping a piece one row at a time. A hard drop moves the piece as far down as possible before it fixes into place. In this case, \emph{drop} and \emph{fix} are removed from the set of moves, and \emph{hard-drop} is introduced instead.
+
+\begin{itemize} \item $\textsc{Tetris-HardDrop} := \textsc{Tetris}[M = { r_+, r_-, s_l, s_r, d_h }]$ \end{itemize}
+
+This variations was first posted in \cite{TIH}. In some video game versions, players can set aside a piece for later use \cite{WikiFandom}. By adding a \emph{hold function} to the available moves, we can define a variant called \textsc{Tetris-WithHold}. However, this particular functionality will not be explored here.
 
 \vspace{1em}
 

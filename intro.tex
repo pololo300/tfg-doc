@@ -1,7 +1,11 @@
-Tetris, created in 1984 by Alexey Pajitnov, .... 
+\chapter{Introduction}
 
+Tetris, created by Alexey Pajitnov in 1984, is one of the most iconic and widely played video games in history. Despite its seemingly simple gameplay, Tetris has been extensively studied across various fields\cite{TWRP}. In computer science, it is examined for its algorithmic complexity, AI applications, and role in programming education. Research into human interaction with Tetris has also provided valuable insights into cognitive processes, social behaviors, and performance factors. The game's influence extends beyond gaming, impacting areas such as robotics, narrative storytelling, and educational tools. Notably, the theoretical challenges of Tetris, particularly its NP-completeness, continue to captivate researchers.
 
-A lot of work has been done around Tetris. In fields such as computer science, it has been studied for its algorithmic complexity, AI applications, and programming education. Studies on human interaction with Tetris explore cognitive processes, social behaviors, and performance factors. Additionally, Tetris has influenced robotics, narrative storytelling, and educational tools, while its theoretical challenges, such as NP-completeness, continue to intrigue researchers \cite{TWRP}.
+Despite its apparent simplicity, problems related to Tetris have been shown to be NP-hard\cite{TIH}. This raises a key question: What makes Tetris computationally complex? More specifically, where does the complexity lie? Is it the player's ability to rotate pieces? The shape, size and amount of pieces? The dimensions of the game board? The objective of the game? Or perhaps a combination of these factors? The complexity of Tetris may emerge from how these elements interact.
 
+This study seeks to explore the computational complexity of Tetris by parametrizing the classical Tetris problem to include its known variants. We begin by proposing a unified definition of Tetris, one that encapsulates all variants within a single framework. In this framework, modifications to specific parameters result in slightly different games.
 
-the question \emph{"what makes Tetris hard?"} or \emph{"where is the complexity in tetris?"}.
+Next, we expose the most popular Tetris variants, grouping them to classify the potential variations and provide a structured approach to understanding their complexity. We then review the existing body of research, highlighting the most relevant findings that inform our study.
+
+After the survey work, we extend our analysis to a variant of Tetris that involves dominoes. First defining the game components and them exploring the game mechanics, presenting some useful results related to piece movement and constructability of boards. After this, we demonstrate that determining survival in Tetris with dominoes can be computed in polynomial time and offer insights into other open problems related to domino puzzles.

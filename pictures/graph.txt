@@ -1,0 +1,61 @@
+    \begin{tikzpicture}[every node/.style={circle, draw, fill=black}]
+      \node (a0) at (0,0) {}; \node (a1) at (1,0) {}; \node (a2) at (2,0) {}; \node (a3) at (3,0) {}; \node (a4) at (4,0) {}; \node (a5) at (5 ,0) {}; 
+      \node (a6) at (6,0) {}; \node (a7) at (7,0) {}; \node (a8) at (8,0) {}; \node (a9) at (9,0) {}; \node (a10) at (10,0) {}; \node (a11) at (11,0) {}; 
+
+      \node (b0) at (0,-1) {}; \node (b1) at (1,-1) {}; \node (b2) at (2,-1) {}; \node (b3) at (3,-1) {}; \node (b5) at (5 ,-1) {}; 
+      \node (b6) at (6,-1) {}; \node (b7) at (7,-1) {}; \node (b8) at (8,-1) {}; \node (b9) at (9,-1) {}; \node (b10) at (10,-1) {}; \node (b11) at (11,-1) {}; 
+
+      \node (c0) at (0,-2) {}; \node (c1) at (1,-2) {}; \node (c2) at (2,-2) {}; \node (c3) at (3,-2) {}; \node (c5) at (5 ,-2) {}; 
+      \node (c6) at (6,-2) {}; \node (c7) at (7,-2) {}; \node (c8) at (8,-2) {}; \node (c11) at (11,-2) {}; 
+
+      \node (d1) at (1,-3) {}; \node (d2) at (2,-3) {}; \node (d5) at (5 ,-3) {}; 
+      \node (d6) at (6,-3) {}; \node (d7) at (7,-3) {}; \node (d11) at (11,-3) {}; 
+
+      \node (e2) at (2,-4) {}; \node (e3) at (3,-4) {}; 
+      \node (e7) at (7,-4) {}; \node (e8) at (8,-4) {};
+
+      \node (f1) at (1,-5) {}; \node (f2) at (2,-5) {}; \node (f3) at (3,-5) {}; \node (f4) at (4,-5) {};
+
+      \node (g4) at (4,-6) {}; \node (g5) at (5,-6) {};
+
+      \node (h3) at (3,-7) {}; \node (h4) at (4,-7) {};
+
+      \node (i2) at (2,-8) {}; \node (i3) at (3,-8) {}; \node (i4) at (4,-8) {}; \node (i5) at (5 ,-8) {}; 
+
+      \node (j1) at (1,-9) {}; \node (j2) at (2,-9) {}; \node (j3) at (3,-9) {}; \node (j4) at (4,-9) {};
+
+      \draw (a0) -- (a1) -- (a2) -- (a3) -- (a4) -- (a5) -- (a6) -- (a7) -- (a8) -- (a9) -- (a10) -- (a11);
+
+      \draw (b0) -- (b1) -- (b2) -- (b3);
+      \draw (b5) -- (b6) -- (b7) -- (b8) -- (b9) -- (b10) -- (b11);
+
+      \draw (c0) -- (c1) -- (c2) -- (c3);
+      \draw (c5) -- (c6) -- (c7) -- (c8);
+
+      \draw (d1) -- (d2);
+      \draw (d5) -- (d6) -- (d7);
+
+      \draw (e2) -- (e3);
+      \draw (e7) -- (e8);
+      \draw (f1) -- (f2) -- (f3) -- (f4);
+      \draw (g4) -- (g5);
+      \draw (h3) -- (h4);
+      \draw (i2) -- (i3) -- (i4) -- (i5);
+      \draw (j1) -- (j2) -- (j3) -- (j4);
+
+      \draw (a0) -- (b0) -- (c0);
+      \draw (a1) -- (b1) -- (c1) -- (d1);
+      \draw (a2) -- (b2) -- (c2) -- (d2) -- (e2) -- (f2);
+      \draw (i2) -- (j2);
+      \draw (a3) -- (b3) -- (c3);
+      \draw (e3) -- (f3);
+      \draw (h3) -- (i3) -- (j3);
+      \draw (f4) -- (g4) -- (h4) -- (i4) -- (j4);
+      \draw (a5) -- (b5) -- (c5) -- (d5);
+      \draw (a6) -- (b6) -- (c6) -- (d6);
+      \draw (a7) -- (b7) -- (c7) -- (d7) -- (e7);
+      \draw (a8) -- (b8) -- (c8);
+      \draw (a9) -- (b9);
+      \draw (a10) -- (b10);
+      \draw (a11) -- (b11) -- (c11) -- (d11);
+    \end{tikzpicture}
